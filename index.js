@@ -4,6 +4,7 @@ const createStore = require('redux').createStore;
 const Validator = require("fastest-validator");
 const CircularBuffer = require('circular-buffer');
 const Queue = require('queue');
+const { Request } = "./messages.js";
 
 const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -15,13 +16,21 @@ function debug(str) {
 
 module.exports = async function(vision, onAction) {
   const validator = new Validator();
-  const actionSchema = {
-    type: "string",
-    payload: "array",
-    caller: "string",
-    tx: "string"
+  const schemas = {
+    actionSchema: {
+      type: "string",
+      payload: "array",
+      caller: "string",
+      tx: "object"
+    },
+    bitDbResponseSchema: {
+      r: "string",
+      c: "string",
+      tx: "object"
+    }
   };
-  const isValidAction = validator.compile(actionSchema);
+  const isValidAction = validator.compile(schemas.actionSchema);
+  const isValidBitDbResponse = validator.compile(schemas.bitDbResponseSchema);
 
   const store = createStore(vision.reducer);
   const socketQuery = {
@@ -30,7 +39,7 @@ module.exports = async function(vision, onAction) {
       find: { "out.s1" : vision.address },
     },
     r: {
-      f: ".[] | { type: .out[0].s2, payload: .out[0].s3, caller: .in[0].e.a, tx: .tx.h}"
+      f: ".[] | { r: .out[0].s2, c: .in[0].e.a, tx: . }"
     }
   };
   const syncQuery = {
@@ -40,7 +49,7 @@ module.exports = async function(vision, onAction) {
       "sort": { "blk.t": 1 }
     },
     "r": {
-      "f": "[.[] | { type: .out[0].s2, payload: .out[0].s3, caller: .in[0].e.a, tx: .tx.h}]"
+      "f": "[.[] | { r: .out[0].s2, c: .in[0].e.a, tx: . }]"
     }
   };
   let syncing = true;
@@ -68,16 +77,21 @@ module.exports = async function(vision, onAction) {
       return;
     }
 
-    data = data.data;
+    let bitDbResponse = data.data;
+    let isValid = isValidBitDbResponse(bitDbResponse);
+    if (!isValid) {
+      console.error("Invalid BitDB response, possibly invalid OP_RETURN data");
+      return;
+    }
 
     if (syncing) {
       debug("tx while syncing! adding to queue");
     }
 
     queue.push(function(cb) {
-      const isAlreadySeen = seen.toarray().indexOf(data.tx) >= 0;
+      const isAlreadySeen = seen.toarray().indexOf(data.tx.h) >= 0;
       if (isAlreadySeen) {
-        debug("TX", data.tx, "already seen! Doing nothing");
+        debug("TX", data.tx.h, "already seen! Doing nothing");
         cb();
       }
       debug("Now processing tx in the queue");
@@ -92,12 +106,27 @@ module.exports = async function(vision, onAction) {
 
   console.info("Starting sync from height", vision.from);
   for (let i = 0; i < txs.c.length; i++) {
-    transformAndDispatch(txs.c[i]);
-    seen.enq(txs.c[i].tx);
+    // TODO REFACTOR
+    let bitDbResponse = txs.c[i];
+    let isValid = isValidBitDbResponse(bitDbResponse);
+    if (!isValid) {
+      console.error("Invalid BitDB response, possibly invalid OP_RETURN data");
+      console.error(isValid);
+      return;
+    }
+    transformAndDispatch(bitDbResponse);
+    seen.enq(bitDbResponse.tx.h);
   }
   for (let i = 0; i < txs.u.length; i++) {
-    transformAndDispatch(txs.u[i]);
-    seen.enq(txs.u[i].tx);
+    let bitDbResponse = txs.u[i];
+    let isValid = isValidBitDbResponse(bitDbResponse);
+    if (!isValid) {
+      console.error("Invalid BitDB response, possibly invalid OP_RETURN data");
+      console.error(isValid);
+      return;
+    }
+    transformAndDispatch(bitDbResponse);
+    seen.enq(bitDbResponse.tx.h);
   }
   queue.start(function(err) {
     if (err) { 
@@ -111,19 +140,47 @@ module.exports = async function(vision, onAction) {
     }
   });
 
+  // go from {r, c, tx } to { type, payload, caller, tx }
   function transformAndDispatch(data) {
+    // is already valid bitdbresponse
     try {
-      data.payload = JSON.parse(data.payload);
-      let isValid = isValidAction(data);
+      // 1. protobuf decode r
+      let buffer = Buffer.from(data.r);
+      let decodedRequestMessage = Request.decode(buffer);
+      // 2. turn message into object
+      let requestObject = Request.toObject(message, {
+        arrays: true,   // populates empty arrays (repeated fields) even if defaults=false
+      });
+      // 3. verify object schema
+      let err = Request.verify(requestObject);
+      if (err)
+        throw Error(err);
 
+      // 4. Tranform into a redux action
+      let action = { 
+        type: requestObject.func,
+        payload: requestObject.args,
+        caller: data.c,
+        tx: data.tx
+      }
+
+      // TODO: maybe this is a bit too much?
+      let isValid = isValidAction(action);
       if (!isValid) {
-        throw new Error(isValid);
+        throw new Error("Valid protobuf Request message transformed into invalid Redux action");
       }
 
       store.dispatch(data);
+      // Callback when action happens
       onAction(syncing, data, store.getState());
     } catch(e) {
-      console.error("Invalid rpc message:", e.message, data);
+      // TODO: improve
+      if (e instanceof protobuf.util.ProtocolError) {
+        // e.instance holds the so far decoded message with missing required fields
+      } else {
+        // wire format is invalid
+      }
+      console.error("Invalid protobuf:", e.message, data);
       return;
     }
   }
