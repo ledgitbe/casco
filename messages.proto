@@ -1,0 +1,19 @@
+// messages.proto
+package messages;
+syntax = "proto3";
+
+message Request {
+    uint32 version = 1;
+    string func = 2;
+    repeated string args = 3;
+}
+
+message Response {
+  uint32 version = 1;
+  uint64 timestamp = 2;
+  uint64 seq = 3;
+  uint32 status = 4;
+  optional string error = 5;
+  optional string message = 6;
+}
+

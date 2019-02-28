@@ -1,12 +1,18 @@
+require('dotenv').config()
 const BitSocket = require('./BitSocket.js');
 const BitQuery = require('./BitQuery.js');
 const createStore = require('redux').createStore;
 const Validator = require("fastest-validator");
 const CircularBuffer = require('circular-buffer');
 const Queue = require('queue');
-const { Request } = "./messages.js";
+const { messages: {Request, Response} } = require("./messages.js");
+const Protobuf = require('protobufjs/minimal');
+const ECEIS = require('bsv/ecies');
+const { PrivateKey, PublicKey } = require('bsv');
+
 
 const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 
 function debug(str) {
   if (process.env.DEBUG) {
@@ -14,7 +20,7 @@ function debug(str) {
   }
 }
 
-module.exports = async function(vision, onAction) {
+module.exports = exports = async function (vision, onAction) {
   const validator = new Validator();
   const schemas = {
     actionSchema: {
@@ -39,7 +45,7 @@ module.exports = async function(vision, onAction) {
       find: { "out.s1" : vision.address },
     },
     r: {
-      f: ".[] | { r: .out[0].s2, c: .in[0].e.a, tx: . }"
+      f: ".[] | { r: .out[0].b2, c: .in[0].e.a, tx: . }"
     }
   };
   const syncQuery = {
@@ -49,7 +55,7 @@ module.exports = async function(vision, onAction) {
       "sort": { "blk.t": 1 }
     },
     "r": {
-      "f": "[.[] | { r: .out[0].s2, c: .in[0].e.a, tx: . }]"
+      "f": "[.[] | { r: .out[0].b2, c: .in[0].e.a, tx: . }]"
     }
   };
   let syncing = true;
@@ -89,13 +95,13 @@ module.exports = async function(vision, onAction) {
     }
 
     queue.push(function(cb) {
-      const isAlreadySeen = seen.toarray().indexOf(data.tx.h) >= 0;
+      const isAlreadySeen = seen.toarray().indexOf(bitDbResponse.tx.h) >= 0;
       if (isAlreadySeen) {
-        debug("TX", data.tx.h, "already seen! Doing nothing");
+        debug("TX", bitDbResponse.tx.h, "already seen! Doing nothing");
         cb();
       }
       debug("Now processing tx in the queue");
-      transformAndDispatch(data);
+      transformAndDispatch(bitDbResponse);
       cb();
     });
   }
@@ -144,11 +150,16 @@ module.exports = async function(vision, onAction) {
   function transformAndDispatch(data) {
     // is already valid bitdbresponse
     try {
+      // 0. Decrypt
+      const CID = ECEIS()
+        .privateKey(PrivateKey.fromWIF(process.env.privateKey))
+        .publicKey(PublicKey(data.tx.in[0].h1)); // h1 = pubKey
+      const decrypted = CID.decrypt(Buffer.from(data.r, 'base64'));
+      //
       // 1. protobuf decode r
-      let buffer = Buffer.from(data.r);
-      let decodedRequestMessage = Request.decode(buffer);
+      let decodedRequestMessage = Request.decode(decrypted);
       // 2. turn message into object
-      let requestObject = Request.toObject(message, {
+      let requestObject = Request.toObject(decodedRequestMessage, {
         arrays: true,   // populates empty arrays (repeated fields) even if defaults=false
       });
       // 3. verify object schema
@@ -164,23 +175,24 @@ module.exports = async function(vision, onAction) {
         tx: data.tx
       }
 
+
       // TODO: maybe this is a bit too much?
       let isValid = isValidAction(action);
       if (!isValid) {
         throw new Error("Valid protobuf Request message transformed into invalid Redux action");
       }
 
-      store.dispatch(data);
+      store.dispatch(action);
       // Callback when action happens
-      onAction(syncing, data, store.getState());
+      onAction(syncing, action, store.getState());
     } catch(e) {
       // TODO: improve
-      if (e instanceof protobuf.util.ProtocolError) {
+      if (e instanceof Protobuf.util.ProtocolError) {
         // e.instance holds the so far decoded message with missing required fields
       } else {
         // wire format is invalid
       }
-      console.error("Invalid protobuf:", e.message, data);
+      console.error("Invalid protobuf:", e.message, data.r);
       return;
     }
   }
@@ -189,3 +201,5 @@ module.exports = async function(vision, onAction) {
     getState: store.getState
   };
 }
+
+exports.Request = Request;
