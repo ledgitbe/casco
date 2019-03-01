@@ -25,6 +25,7 @@ $root.messages = (function() {
          * @memberof messages
          * @interface IRequest
          * @property {number|null} [version] Request version
+         * @property {number|Long|null} [timestamp] Request timestamp
          * @property {string|null} [func] Request func
          * @property {Array.<string>|null} [args] Request args
          */
@@ -52,6 +53,14 @@ $root.messages = (function() {
          * @instance
          */
         Request.prototype.version = 0;
+
+        /**
+         * Request timestamp.
+         * @member {number|Long} timestamp
+         * @memberof messages.Request
+         * @instance
+         */
+        Request.prototype.timestamp = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
 
         /**
          * Request func.
@@ -95,11 +104,13 @@ $root.messages = (function() {
                 writer = $Writer.create();
             if (message.version != null && message.hasOwnProperty("version"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.version);
+            if (message.timestamp != null && message.hasOwnProperty("timestamp"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.timestamp);
             if (message.func != null && message.hasOwnProperty("func"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.func);
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.func);
             if (message.args != null && message.args.length)
                 for (var i = 0; i < message.args.length; ++i)
-                    writer.uint32(/* id 3, wireType 2 =*/26).string(message.args[i]);
+                    writer.uint32(/* id 4, wireType 2 =*/34).string(message.args[i]);
             return writer;
         };
 
@@ -138,9 +149,12 @@ $root.messages = (function() {
                     message.version = reader.uint32();
                     break;
                 case 2:
-                    message.func = reader.string();
+                    message.timestamp = reader.uint64();
                     break;
                 case 3:
+                    message.func = reader.string();
+                    break;
+                case 4:
                     if (!(message.args && message.args.length))
                         message.args = [];
                     message.args.push(reader.string());
@@ -183,6 +197,9 @@ $root.messages = (function() {
             if (message.version != null && message.hasOwnProperty("version"))
                 if (!$util.isInteger(message.version))
                     return "version: integer expected";
+            if (message.timestamp != null && message.hasOwnProperty("timestamp"))
+                if (!$util.isInteger(message.timestamp) && !(message.timestamp && $util.isInteger(message.timestamp.low) && $util.isInteger(message.timestamp.high)))
+                    return "timestamp: integer|Long expected";
             if (message.func != null && message.hasOwnProperty("func"))
                 if (!$util.isString(message.func))
                     return "func: string expected";
@@ -210,6 +227,15 @@ $root.messages = (function() {
             var message = new $root.messages.Request();
             if (object.version != null)
                 message.version = object.version >>> 0;
+            if (object.timestamp != null)
+                if ($util.Long)
+                    (message.timestamp = $util.Long.fromValue(object.timestamp)).unsigned = true;
+                else if (typeof object.timestamp === "string")
+                    message.timestamp = parseInt(object.timestamp, 10);
+                else if (typeof object.timestamp === "number")
+                    message.timestamp = object.timestamp;
+                else if (typeof object.timestamp === "object")
+                    message.timestamp = new $util.LongBits(object.timestamp.low >>> 0, object.timestamp.high >>> 0).toNumber(true);
             if (object.func != null)
                 message.func = String(object.func);
             if (object.args) {
@@ -239,10 +265,20 @@ $root.messages = (function() {
                 object.args = [];
             if (options.defaults) {
                 object.version = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.timestamp = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.timestamp = options.longs === String ? "0" : 0;
                 object.func = "";
             }
             if (message.version != null && message.hasOwnProperty("version"))
                 object.version = message.version;
+            if (message.timestamp != null && message.hasOwnProperty("timestamp"))
+                if (typeof message.timestamp === "number")
+                    object.timestamp = options.longs === String ? String(message.timestamp) : message.timestamp;
+                else
+                    object.timestamp = options.longs === String ? $util.Long.prototype.toString.call(message.timestamp) : options.longs === Number ? new $util.LongBits(message.timestamp.low >>> 0, message.timestamp.high >>> 0).toNumber(true) : message.timestamp;
             if (message.func != null && message.hasOwnProperty("func"))
                 object.func = message.func;
             if (message.args && message.args.length) {

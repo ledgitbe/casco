@@ -4,8 +4,9 @@ syntax = "proto3";
 
 message Request {
     uint32 version = 1;
-    string func = 2;
-    repeated string args = 3;
+    uint64 timestamp = 2;
+    string func = 3;
+    repeated string args = 4;
 }
 
 message Response {
