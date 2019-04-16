@@ -184,7 +184,7 @@ module.exports = exports = async function (vision, onAction) {
 
       store.dispatch(action);
       // Callback when action happens
-      onAction(syncing, action, store.getState());
+      onAction({ isSyncing: syncing, action, tx, state: store.getState()});
     } catch(e) {
       // TODO: improve
       if (e instanceof Protobuf.util.ProtocolError) {
