@@ -1,5 +1,6 @@
-const brisk = require('brisk');
-const simpleRpcRouter = require('brisk/lib/middleware/simple-rpc-router');
+const brisk = require('..');
+const rpcRouter = require('../lib/middleware/rpc-router');
+const rpcLogger = require('../lib/middleware/rpc-logger');
 
 const state = {
   db: {},
@@ -31,19 +32,17 @@ function requiresInit(req, res, next) {
   }
 }
 
-function logger(req, res, next) {
-  console.log(`CALL ${req.route} ${req.args}`);
-  next();
-  console.log(state);
-}
-
 const app = brisk();
 
 app.address = "14yDSfMug1RxTRfAKC1mrfD1LqoBGSXUWc";
 app.from = 571999;
 
-app.use(simpleRpcRouter);
-app.use(logger);
+// rpcRouter implements the following protocol:
+// txOutput 0: OP_RETURN <BITCOM_ID> <ROUTE> <JSON ENCODED ARGUMENTS ARRAY>
+// Fills req.route, req.args, req.caller
+app.use(rpcRouter);
+// Log them every time
+app.use(rpcLogger);
 
 app.use('init', (req, res) => {
   if (!state.initialized) {
