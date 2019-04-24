@@ -9,6 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
+    "bsv": "^0.26.5",
     "circular-buffer": "^1.0.2",
     "eventsource": "^1.0.7",
     "fastest-validator": "^0.6.17",
@@ -19,6 +20,7 @@
     "lib": "lib"
   },
   "devDependencies": {
+    "datapay": "0.0.14",
     "dotenv": "^7.0.0",
     "qrcode-terminal": "^0.12.0"
   },
