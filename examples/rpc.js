@@ -42,6 +42,7 @@ app.use(rpcRouter);
 
 // Log rpc transactions every time
 app.use(rpcLogger);
+app.use((req, res, next) => { next(); console.log(state); });
 
 // Attach req.send if we're not syncing
 app.use(rpcResponder('L4PkQg1y39F1QfdmVJVZrb2DrEqxhSTzXtQ2gSJChmuoE5uRVqWo', (err, txid) => {console.log(err, txid)}));
@@ -75,4 +76,4 @@ app.use('confirm', (req, res) => {
   }
 });
 
-app.listen('bitcom://14yDSfMug1RxTRfAKC1mrfD1LqoBGSXUWc', 570000);
+app.listen('bit://14yDSfMug1RxTRfAKC1mrfD1LqoBGSXUWc', 570000);
