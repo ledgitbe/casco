@@ -1,7 +1,7 @@
-const brisk = require('..');
-const rpcRouter = require('../lib/middleware/rpc-router');
-const rpcLogger = require('../lib/middleware/rpc-logger');
-const rpcResponder = require('../lib/middleware/rpc-responder');
+const brisk = require('brisk');
+const rpcRouter = require('brisk/lib/middleware/rpc-router');
+const rpcLogger = require('brisk/lib/middleware/rpc-logger');
+const rpcResponder = require('brisk/lib/middleware/rpc-responder');
 
 require('dotenv').config();
 

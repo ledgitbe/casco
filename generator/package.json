@@ -1,0 +1,15 @@
+{
+  "name": "generator-brisk",
+  "version": "0.0.1",
+  "description": "",
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "bsv": "^0.26.4",
+    "yeoman-generator": "^1.0.0"
+  }
+}
