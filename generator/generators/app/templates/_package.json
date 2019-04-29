@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bsv": "^0.26.5",
     "brisk": "latest",
     "datapay": "0.0.14",
     "dotenv": "^7.0.0",
