@@ -17,7 +17,7 @@ const args = process.argv.slice(3);
 
 Datapay.send(
   {
-    data: [process.env.PREFIX, func, JSON.stringify(args)],
+    data: [process.env.PREFIX, JSON.stringify([func, ...args])],
     pay: { key: process.env.PRIVATE_KEY }
   },
   (err, txid) => { 
