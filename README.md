@@ -1,8 +1,9 @@
 # Install
+1. `npm install -g yeoman`
 1. git clone this repo
-2. cd into directory
-3. run `npm link`
-4. cd generator, then run `npm link`
+1. cd into directory
+1. run `npm link`
+1. cd generator, then run `npm link`
 
 If you get permission errors when linking, use sudo. We recommend you use nvm
 to install node v10 or up.
