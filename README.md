@@ -10,8 +10,9 @@ to install node v10 or up.
 
 # Generate an empty project
 1. Go to directory where you want to place project, then ```yo ledgit```
-2. `cd your-project`
-3. `npm link ledgit`
-4. `yo ledgit:client` to generate an extra client
+1. `cd your-project`
+1. `npm install`
+1. `npm link ledgit`
+1. `yo ledgit:client` to generate an extra client
 
 # Check out the examples directory
