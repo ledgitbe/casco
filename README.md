@@ -1,10 +1,13 @@
 # Install
 1. git clone this repo
-2. run ```npm link```
+2. cd into directory
+3. run ```npm link```
+4. cd generator, then run ``npm link```
 
-# Generate a bsv-redux project
-1. git clone generator-bsv-redux
-2. run ```npm link```
-4. Go to directory where you want to place project, then ```yo bsv-redux```
-5. ```cd your-project```
-6. ```npm link bsv-redux-sync```
+# Generate an empty project
+1. Go to directory where you want to place project, then ```yo ledgit```
+2. `cd your-project`
+3. `npm link ledgit`
+4. `yo ledgit:client` to generate an extra client
+
+# Check out the examples directory
