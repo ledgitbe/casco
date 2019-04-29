@@ -3,6 +3,7 @@
 const path = require('path');
 const Datapay = require('datapay')
 const QRCode = require('qrcode-terminal');
+const ECEIS = require('bsv/ecies');
 
 require('dotenv').config({ path: path.resolve(process.cwd(), `.env.${path.basename(__filename, '.js')}`) });
 
@@ -15,9 +16,16 @@ if (process.argv.length < 3) {
 const func = process.argv[2];
 const args = process.argv.slice(3);
 
+const CID = ECEIS()
+  .privateKey(PrivateKey.fromWIF(process.env.PRIVATE_KEY))
+  .publicKey(PublicKey(process.env.PREFIX))
+
+const plaintext = JSON.stringify([func, ...args]);
+const encrypted = CID.encrypt(plaintext);
+
 Datapay.send(
   {
-    data: [process.env.PREFIX, JSON.stringify([func, ...args])],
+    data: [process.env.PREFIX, encrypted],
     pay: { key: process.env.PRIVATE_KEY }
   },
   (err, txid) => { 

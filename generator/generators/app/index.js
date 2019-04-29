@@ -50,6 +50,7 @@ module.exports = class extends Generator {
     let contractKeyPair = createKey();
     // Save contractAddress inside .yo-rc.json for composability of client
     this.config.set("PREFIX", contractKeyPair.ADDRESS);
+    this.config.set("PREFIX_PUBLIC_KEY", contractKeyPair.PUBLIC_KEY);
 
     // Write contract template
     this.fs.copyTpl(

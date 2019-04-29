@@ -23,7 +23,12 @@ module.exports = class extends Generator {
   writing() {
     let keypair = createKey();
 
-    let data = Object.assign({}, keypair, { PREFIX: this.config.get("PREFIX") || "\"BITCOM PREFIX" });
+    let data = Object.assign(
+      {}, 
+      keypair, 
+      { PREFIX: this.config.get("PREFIX") },
+      { PREFIX_PUBLIC_KEY: this.config.get("PREFIX_PUBLIC_KEY") }
+    );
 
     this.fs.copyTpl(
       this.templatePath('_client.js'),
@@ -32,6 +37,9 @@ module.exports = class extends Generator {
     );
 
     // Generate .env.client-ADDRESS.js file
-    this.fs.write(`.env.client-${keypair.ADDRESS}`, Object.entries(data).map(([k,v]) => `${k}=${v}`).join('\n'));
+    this.fs.write(
+      `.env.client-${keypair.ADDRESS}`,
+      Object.entries(data).map(([k,v]) => `${k}=${v}`).join('\n')i
+    );
   }
 };
