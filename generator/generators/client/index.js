@@ -39,7 +39,7 @@ module.exports = class extends Generator {
     // Generate .env.client-ADDRESS.js file
     this.fs.write(
       `.env.client-${keypair.ADDRESS}`,
-      Object.entries(data).map(([k,v]) => `${k}=${v}`).join('\n')i
+      Object.entries(data).map(([k,v]) => `${k}=${v}`).join('\n')
     );
   }
 };
