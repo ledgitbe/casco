@@ -1,5 +1,5 @@
 # Install
-1. `npm install -g yeoman`
+1. `npm install -g yo`
 1. git clone this repo
 1. cd into directory
 1. run `npm link`
