@@ -62,17 +62,21 @@ app.use('invite', requiresInit, mustBeParticipant, (req, res) => {
   state.participants = state.participants.concat(req.args[0]);
 });
 
-app.use('set', mustBeParticipant, mustHaveArguments(2), (req, res) => {
-  let [key, value] = req.args;
+/*
+ * This function uses the validator middleware 
+ * to make named arguments available under req.params
+ */
+app.use('set', requiresInit, mustBeParticipant, validator({ key: "string", value: "any"}), (req, res) => {
+  let { key, value } = req.params;
   state.db[key] = value;
 });
 
-app.use('targ', validator({ id: "string" }), (req, res) => {
-  console.log(req.params);
-});
-
+/*
+ * This function doesn't use the validator middleware.
+ * It just uses req.args and takes the first element of it
+ */
 app.use('del', requiresInit, mustBeParticipant, mustHaveArguments(1), (req, res) => {
-  let [key] = req.args;
+  let key = req.args[0];
   delete state.db[key];
 });
 
