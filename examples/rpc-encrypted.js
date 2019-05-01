@@ -1,8 +1,8 @@
 const brisk = require('..');
-const rpcRouter = require('../lib/middleware/rpc-router');
-const rpcLogger = require('../lib/middleware/rpc-logger');
-const rpcResponder = require('../lib/middleware/rpc-responder');
-const rpcDecrypt = require('../lib/middleware/rpc-decrypt');
+const decrypt = require('../lib/middleware/decrypt-s2json.js');
+const router = require('../lib/middleware/router-s2json');
+const logger = require('../lib/middleware/logger');
+const responder = require('../lib/middleware/responder');
 
 require('dotenv').config();
 
@@ -41,11 +41,12 @@ const app = brisk();
 // rpcRouter implements the following protocol:
 // txOutput 0: OP_RETURN <BITCOM_ID> <ROUTE> <JSON ENCODED ARGUMENTS ARRAY>
 // Fills req.route, req.args, req.caller
-app.use(rpcDecrypt(process.env.PRIVATE_KEY));
-app.use(rpcRouter);
+app.use(decrypt(process.env.PRIVATE_KEY));
+app.use(router);
 
 // Log rpc transactions every time
-app.use(rpcLogger);
+app.use(logger);
+
 app.use((req, res, next) => {
   next();
   console.log(state);

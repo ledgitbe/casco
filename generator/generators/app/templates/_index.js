@@ -1,7 +1,7 @@
 const brisk = require('ledgit');
-const rpcRouter = require('ledgit/lib/middleware/rpc-router');
-const rpcLogger = require('ledgit/lib/middleware/rpc-logger');
-const rpcResponder = require('ledgit/lib/middleware/rpc-responder');
+const router = require('ledgit/lib/middleware/router-s2json');
+const logger = require('ledgit/lib/middleware/logger');
+const responder = require('ledgit/lib/middleware/responder');
 
 require('dotenv').config();
 
@@ -40,14 +40,14 @@ const app = brisk();
 // rpcRouter implements the following protocol:
 // txOutput 0: OP_RETURN <BITCOM_ID> <ROUTE> <JSON ENCODED ARGUMENTS ARRAY>
 // Fills req.route, req.args, req.caller
-app.use(rpcRouter);
+app.use(router);
 
 // Log rpc transactions every time
-app.use(rpcLogger);
+app.use(logger);
 app.use((req, res, next) => { next(); console.log(state); });
 
 // Attach req.send if we're not syncing
-app.use(rpcResponder(process.env.PRIVATE_KEY, (err, txid) => {console.log(err, txid)}));
+app.use(responder(process.env.PRIVATE_KEY, (err, txid) => {console.log(err, txid)}));
 
 
 app.use('init', (req, res) => {
