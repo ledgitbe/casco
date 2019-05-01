@@ -2,6 +2,7 @@ const brisk = require('..');
 const router = require('../lib/middleware/router-s2json');
 const logger = require('../lib/middleware/logger');
 const responder = require('../lib/middleware/responder');
+const validator = require('../lib/middleware/validator');
 
 require('dotenv').config();
 
@@ -66,9 +67,19 @@ app.use('set', mustBeParticipant, mustHaveArguments(2), (req, res) => {
   state.db[key] = value;
 });
 
+app.use('targ', validator({ id: "string" }), (req, res) => {
+  console.log(req.params);
+});
+
 app.use('del', requiresInit, mustBeParticipant, mustHaveArguments(1), (req, res) => {
   let [key] = req.args;
   delete state.db[key];
+});
+
+app.use((err, req, res, next) => {
+  if (err) {
+    console.log(err);
+  }
 });
 
 app.listen(`bit://${process.env.ADDRESS}`, 570000);
