@@ -1,4 +1,4 @@
-const brisk = require('ledgit');
+const ledgit = require('ledgit');
 const router = require('ledgit/lib/middleware/router-s2json');
 const logger = require('ledgit/lib/middleware/logger');
 const responder = require('ledgit/lib/middleware/responder');
@@ -35,14 +35,14 @@ function requiresInit(req, res, next) {
   }
 }
 
-const app = brisk();
+const app = ledgit();
 
-// rpcRouter implements the following protocol:
-// txOutput 0: OP_RETURN <BITCOM_ID> <ROUTE> <JSON ENCODED ARGUMENTS ARRAY>
+// router-s2json implements the following protocol:
+// txOutput 0: OP_RETURN <BITCOM_ID> <JSON ENCODED ARRAY I.E. [func, arg1, arg2, ...]>
 // Fills req.route, req.args, req.caller
 app.use(router);
 
-// Log rpc transactions every time
+// Log route, args and caller every time
 app.use(logger);
 app.use((req, res, next) => { next(); console.log(state); });
 
