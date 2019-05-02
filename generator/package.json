@@ -2,6 +2,8 @@
   "name": "generator-ledgit",
   "version": "0.0.1",
   "description": "",
+  "author": "Ledgit bvba",
+  "private": true,
   "files": [
     "generators"
   ],
