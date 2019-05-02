@@ -5,8 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "MIT",
+  "author": "Ledgit bvba",
+  "private": true,
   "dependencies": {
     "axios": "^0.18.0",
     "bsv": "^0.26.5",
