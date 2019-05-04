@@ -48,7 +48,7 @@ module.exports = class extends Generator {
             name: "project_type",
             message: "Choose which project to generate",
             default: "empty",
-            project_types,
+            choices: project_types,
           },
         ]);
 
