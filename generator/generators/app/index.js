@@ -22,68 +22,39 @@ module.exports = class extends Generator {
   }
 
   async prompting() {
-    this.props = await this.prompt([
+    const choices =  ['New Project', 'New Client'];
+
+    console.log("Welcome to The Ledgit Bitcoin Application Framework");
+
+    const props = await this.prompt([
       {
-        type: "input",
-        name: "name",
-        message: "Your app name",
-        default: "brisk-app"
+        type: "list",
+        name: "action",
+        message: "Choose the next step",
+        default: "New Project",
+        choices,
       },
     ]);
 
-    this.log("Project name: ", this.props.name);
-  }
+    switch (props.action) {
+      case choices[1]:
+        this.composeWith(require.resolve('../client'));
+        break;
+      default:
+        const project_types = ['type1','type2'];
+        const nested_props = await this.prompt([
+          {
+            type: "list",
+            name: "project_type",
+            message: "Choose which project to generate",
+            default: "empty",
+            project_types,
+          },
+        ]);
 
-  default() {
-    if (path.basename(this.destinationPath()) !== this.props.name) {
-      this.log(
-        `Your app must be inside a folder named ${
-          this.props.name
-        }\nI'll automatically create this folder.`
-      );
-      mkdirp(this.props.name);
-      this.destinationRoot(this.destinationPath(this.props.name));
+        this.composeWith(require.resolve('../project'),{template: nested_props.project_type});
+        break;
     }
   }
 
-  writing() {
-    let contractKeyPair = createKey();
-    // Save contractAddress inside .yo-rc.json for composability of client
-    this.config.set("PREFIX", contractKeyPair.ADDRESS);
-    this.config.set("PREFIX_PUBLIC_KEY", contractKeyPair.PUBLIC_KEY);
-
-    // Write contract template
-    this.fs.copyTpl(
-      this.templatePath('_index.js'),
-      this.destinationPath('index.js'),
-      { ADDRESS: contractKeyPair.ADDRESS, height: 591145 }
-    );
-
-    // Write package.json
-    this.fs.copyTpl(
-      this.templatePath('_package.json'),
-      this.destinationPath('package.json'),
-      { name: this.props.name }
-    );
-
-    // Write contract keypair details to .env
-    this.fs.write('.env', Object.entries(contractKeyPair).map(([k,v]) => `${k}=${v}`).join('\n'));
-
-    // Copy normal files
-    [].forEach(file => {
-      this.fs.copy(this.templatePath(file), this.destinationPath(file));
-    });
-
-    // Create 2 clients
-    this.composeWith(require.resolve('../client'));
-    this.composeWith(require.resolve('../client'));
-  }
-
-  end() {
-    this.log("To build a client, run yo bsv-redux:client inside your project directory");
-  }
-
-  install() {
-    this.installDependencies({ bower: false });
-  }
 };
