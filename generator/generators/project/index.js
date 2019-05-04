@@ -59,7 +59,7 @@ module.exports = class extends Generator {
   }
 
   end() {
-    this.log("To build a client, run yo bsv-redux:client inside your project directory");
+    this.log("To build a client, run yo ledgit:client inside your project directory");
   }
 
   install() {

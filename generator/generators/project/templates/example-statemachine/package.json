@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ledgit" : "latest",
     "redis": "^2.8.0",
     "bsv": "^0.26.5",
     "brisk": "latest",

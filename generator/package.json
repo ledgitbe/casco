@@ -1,18 +1,18 @@
 {
   "name": "generator-ledgit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "author": "Ledgit bvba",
-  "private": true,
   "files": [
-    "generators"
+    "generators",
+    "util"
   ],
   "keywords": [
     "yeoman-generator"
   ],
   "dependencies": {
     "bitindex-sdk": "^3.0.11",
-    "bsv": "^0.26.4",
+    "bsv": "^0.26.5",
     "yeoman-generator": "^1.0.0"
   }
 }
