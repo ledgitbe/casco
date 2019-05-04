@@ -22,12 +22,14 @@ module.exports = class extends Generator {
   }
 
   async prompting() {
+    this.sourceRoot(path.join(__dirname, 'templates', this.options.template || 'empty'));
+
     this.props = await this.prompt([
       {
         type: "input",
         name: "name",
         message: "Your app name",
-        default: "brisk-app"
+        default: this.templateDir
       },
     ]);
 
@@ -56,7 +58,7 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('_index.js'),
       this.destinationPath('index.js'),
-      { ADDRESS: contractKeyPair.ADDRESS, height: 591145 }
+      { ADDRESS: contractKeyPair.ADDRESS, height: 591145 } // TODO: auto get last block height
     );
 
     // Write package.json
