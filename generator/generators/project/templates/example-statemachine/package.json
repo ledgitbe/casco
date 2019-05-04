@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "ledgit" : "latest",
-    "redis": "^2.8.0",
     "bsv": "^0.26.5",
     "datapay": "0.0.14",
     "dotenv": "^7.0.0",
