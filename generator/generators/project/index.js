@@ -43,18 +43,12 @@ module.exports = class extends Generator {
     this.config.set("PREFIX", contractKeyPair.ADDRESS);
     this.config.set("PREFIX_PUBLIC_KEY", contractKeyPair.PUBLIC_KEY);
 
+
     // Write contract template
     this.fs.copyTpl(
-      this.templatePath('_index.js'),
-      this.destinationPath('index.js'),
-      { ADDRESS: contractKeyPair.ADDRESS, height: await getBlockHeight() } // TODO: auto get last block height
-    );
-
-    // Write package.json
-    this.fs.copyTpl(
-      this.templatePath('_package.json'),
-      this.destinationPath('package.json'),
-      { name: this.props.name }
+      this.templatePath('_*'),
+      this.destinationRoot(),
+      { ADDRESS: contractKeyPair.ADDRESS, height: await getBlockHeight(), name: this.props.name }
     );
 
     // Write contract keypair details to .env
