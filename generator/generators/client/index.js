@@ -1,6 +1,5 @@
 const Generator = require('yeoman-generator');
 const path = require('path');
-const mkdirp = require('mkdirp');
 const bsv = require('bsv');
 const { createKey } = require('../../util');
 

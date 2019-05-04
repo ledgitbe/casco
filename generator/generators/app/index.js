@@ -35,7 +35,7 @@ module.exports = class extends Generator {
         this.composeWith(require.resolve('../client'));
         break;
       default:
-        const project_types = getDirectories(__dirname + '/../project/templates/');
+        const project_types = getDirectories(path.join(__dirname, '../project/templates/'));
         const nested_props = await this.prompt([
           {
             type: "list",

@@ -1,7 +1,6 @@
 const Generator = require('yeoman-generator');
 const path = require('path');
-const mkdirp = require('mkdirp');
-const bsv = require('bsv');
+const fs = require("fs");
 const { createKey, getBlockHeight } = require('../../util');
 
 module.exports = class extends Generator {
