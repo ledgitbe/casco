@@ -1,4 +1,13 @@
 const Generator = require('yeoman-generator');
+const path = require('path');
+const fs = require('fs');
+
+
+function getDirectories(path) {
+  return fs.readdirSync(path).filter(function (file) {
+    return fs.statSync(path+'/'+file).isDirectory();
+  });
+}
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -26,7 +35,7 @@ module.exports = class extends Generator {
         this.composeWith(require.resolve('../client'));
         break;
       default:
-        const project_types = ['type1','type2'];
+        const project_types = getDirectories(__dirname + '/../project/templates/');
         const nested_props = await this.prompt([
           {
             type: "list",
