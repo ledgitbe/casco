@@ -23,13 +23,15 @@ function mustBeParticipant(req, res, next) {
   if (state.participants.indexOf(req.caller) >= 0) {
     next();
   } else {
-    console.log("Received call for " + req.fn + " but caller is not participant");
+    next(new Error(`Received call for ${req.route} but caller is not participant`));
   }
 }
 
 function requiresInit(req, res, next) {
   if (state.initialized) {
     next();
+  } else {
+    next(new Error(`Received call for ${req.route} but contract is not initialized`));
   }
 }
 
@@ -44,6 +46,11 @@ const app = ledgit();
 
 app.use(router);
 app.use(logger);
+app.use((req, res, next) => {
+  next();
+  console.log("New state");
+  console.log(state);
+});
 
 app.use('init', (req, res) => {
   // You must call `init` with a funded client to become the first participant
@@ -67,6 +74,13 @@ app.use('set', requiresInit, mustBeParticipant, validator({ key: "string", value
 app.use('del', requiresInit, mustBeParticipant, validator({ key: "string" }), (req, res) => {
   client.del(req.params.key);;
   delete state.db[key];
+});
+
+// Simple error handler
+app.use((err, req, res, next) => {
+  if (err) {
+    console.log(err.message);
+  }
 });
 
 app.listen(`bit://${process.env.ADDRESS}`, <%= height %>);
