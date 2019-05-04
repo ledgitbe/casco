@@ -2,7 +2,7 @@ const Generator = require('yeoman-generator');
 const path = require('path');
 const mkdirp = require('mkdirp');
 const bsv = require('bsv');
-const { createKey } = require('./util/index');
+const { createKey } = require('../util/index');
 
 module.exports = class extends Generator {
   constructor(args, opts) {

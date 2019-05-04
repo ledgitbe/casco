@@ -2,18 +2,7 @@ const Generator = require('yeoman-generator');
 const path = require('path');
 const mkdirp = require('mkdirp');
 const bsv = require('bsv');
-
-const createKey = function() { // TODO put in util file
-  let privateKey = new bsv.PrivateKey();
-  let address = privateKey.toAddress();
-  let pubKey = privateKey.toPublicKey();
-
-  return {
-    ADDRESS: address.toString(),
-    PUBLIC_KEY: pubKey.toString(),
-    PRIVATE_KEY: privateKey.toWIF(),
-  };
-}
+const { createKey } = require('../util/index');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
