@@ -2,7 +2,7 @@ const Generator = require('yeoman-generator');
 const path = require('path');
 const mkdirp = require('mkdirp');
 const bsv = require('bsv');
-const { createKey } = require('../util/index');
+const { createKey, getBlockHeight } = require('../../util');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -37,7 +37,7 @@ module.exports = class extends Generator {
     }
   }
 
-  writing() {
+  async writing() {
     let contractKeyPair = createKey();
     // Save contractAddress inside .yo-rc.json for composability of client
     this.config.set("PREFIX", contractKeyPair.ADDRESS);
@@ -47,7 +47,7 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('_index.js'),
       this.destinationPath('index.js'),
-      { ADDRESS: contractKeyPair.ADDRESS, height: 591145 } // TODO: auto get last block height
+      { ADDRESS: contractKeyPair.ADDRESS, height: await getBlockHeight() } // TODO: auto get last block height
     );
 
     // Write package.json

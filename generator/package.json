@@ -11,6 +11,7 @@
     "yeoman-generator"
   ],
   "dependencies": {
+    "bitindex-sdk": "^3.0.11",
     "bsv": "^0.26.4",
     "yeoman-generator": "^1.0.0"
   }
