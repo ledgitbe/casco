@@ -16,7 +16,7 @@ module.exports = class extends Generator {
   }
 
   async prompting() {
-    const choices =  ['New Project', 'New Client'];
+    const choices =  ['New Project', 'New Client', 'Tutorials'];
 
     console.log("Welcome to The Ledgit Bitcoin Application Framework");
 
@@ -31,6 +31,9 @@ module.exports = class extends Generator {
     ]);
 
     switch (props.action) {
+      case choices[2]:
+        this.composeWith(require.resolve('../tutorial'));
+        break;
       case choices[1]:
         this.composeWith(require.resolve('../client'));
         break;
