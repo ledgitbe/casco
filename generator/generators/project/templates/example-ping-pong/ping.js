@@ -13,7 +13,7 @@ app.use(router);
 app.use(responder(process.env.PRIVATE_KEY, (err, txid) => {console.log(err, txid)}));
 
 app.use('ping', (req, res) => {
-  res.send([process.env.ADDRESS, 'pong', JSON.stringify([req.tx.tx.h])]);
+  res.send([process.env.ADDRESS, JSON.stringify(["pong", req.tx.tx.h])]);
 });
 
 app.listen(`bit://${process.env.ADDRESS}`, <%= height %>);
