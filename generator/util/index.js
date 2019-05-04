@@ -15,7 +15,17 @@ module.exports.createKey = () => {
 }
 
 module.exports.getBlockHeight = async () => {
-  var bestBlockHash = await bitindex.chaininfo.bestBlockHash();
-  var bestBlock = await bitindex.block.getByBlockHash(bestBlockHash.bestblockhash);
-  return bestBlock.height;
+  try {
+    var bestBlockHash = await bitindex.chaininfo.bestBlockHash();
+    var bestBlock = await bitindex.block.getByBlockHash(bestBlockHash.bestblockhash);
+    if (!bestBlock.height) {
+      throw Error("Couldn't get block height");
+    }
+    return bestBlock.height;
+  } catch (e) {
+    console.error("Could not connect to BitIndex, we'll use a default sync height from block 500000");
+    console.log("Error message: "+ e);
+    return 500000;
+  }
+
 }
