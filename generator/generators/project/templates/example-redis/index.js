@@ -1,15 +1,9 @@
 const ledgit = require('ledgit');
 const router = require('ledgit/lib/middleware/router-s2json');
 const logger = require('ledgit/lib/middleware/logger');
-const responder = require('ledgit/lib/middleware/responder');
 
 require('dotenv').config();
 
-const state = {
-  db: {},
-  participants: [],
-  initialized: false,
-};
 
 function mustBeParticipant(req, res, next) {
   if (state.participants.indexOf(req.caller) >= 0) {
