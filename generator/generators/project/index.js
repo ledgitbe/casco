@@ -46,7 +46,7 @@ module.exports = class extends Generator {
 
     // Write contract template
     this.fs.copyTpl(
-      this.templatePath('_*'),
+      this.templatePath('*'),
       this.destinationRoot(),
       { ADDRESS: contractKeyPair.ADDRESS, height: await getBlockHeight(), name: this.props.name }
     );
@@ -54,13 +54,7 @@ module.exports = class extends Generator {
     // Write contract keypair details to .env
     this.fs.write('.env', Object.entries(contractKeyPair).map(([k,v]) => `${k}=${v}`).join('\n'));
 
-    // Copy normal files
-    [].forEach(file => {
-      this.fs.copy(this.templatePath(file), this.destinationPath(file));
-    });
-
-    // Create 2 clients
-    this.composeWith(require.resolve('../client'));
+    // Create a client
     this.composeWith(require.resolve('../client'));
   }
 
