@@ -15,11 +15,11 @@ class Chat extends Component {
     super();
     this.state = {
       messageList: [],
-      fromAddress: "1Ar4Km1WzSBHgcQzU5HXy5DNKmbfPhRFsH",
-      toAddress: "1EDTTUAhcZdPTE2BbzzgUdAEautJ9VrMoU",
+      fromAddress: "",
+      toAddress: "",
       PREFIX: "1AFrHuW9zV86VP1zWxZJpEDSvbsWvJz6wN",
-      PRIVATE_KEY: "KwF57YW87KYpJV1BP1WABhWqt8vRcQNoMgD4vTiaL8qphFWWJ5Fq",
-      PUBLIC_KEY: "02584ddc69b0380d33f8c3994e8a37a9a5c47861dbce4d792136495b75d523796a",
+      PRIVATE_KEY: "",
+      PUBLIC_KEY: "",
       formVisible: true,
     };
 
@@ -126,7 +126,7 @@ class Chat extends Component {
   }
 
   render() {
-   console.log(this.state); 
+    const agentProfile = {teamName: this.state.PUBLIC_KEY}
     return (<div>
       { this.state.formVisible && (
       <form onSubmit={this.handleSubmit}>
@@ -142,21 +142,20 @@ class Chat extends Component {
         <input type="button" onClick={this.createKeys} value="Create Private key" />
         </form>
       )}
-      { !this.state.formVisible && (
+      { this.state.PRIVATE_KEY && (
         <div>
           Fund local wallet: <br />
       
           <QRCode value={this.state.fromAddress} /> <br />
+          My private key:<br />
+          {this.state.PRIVATE_KEY}<br />
           My public key:<br />
           {bsv.PublicKey.fromPrivateKey(bsv.PrivateKey.fromWIF(this.state.PRIVATE_KEY)).toString()}
         </div>
       )}
       <Launcher
         mute={true}
-        agentProfile={{
-          teamName: 'react-chat-window',
-          imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
-        }}
+        agentProfile={agentProfile}
         onMessageWasSent={this._onMessageWasSent.bind(this)}
         messageList={this.state.messageList}
         showEmoji
