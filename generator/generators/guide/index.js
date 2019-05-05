@@ -11,6 +11,23 @@ module.exports = class extends Generator {
 
   async prompting() {
     console.log("THIS NEEDS IMPLEMENTING");
+    console.log("THE PROJECT TEMPLATES ARE BASED ON example-statemachine");
+    console.log("1) Generate the project as usual");
+    console.log(") Don't use composeWith(...) because we need to access all the generated variables for the tutorial instructions");
+    console.log(") This means embedding clients into these templates and not using composeWith(...)");
+    console.log("2) Instruct user to open new terminal and cd into new project");
+    console.log("3) Instruct user to run `npm start`");
+    console.log("4) Instruct user to open new terminal again and run ./client-*.js");
+    console.log("5) Explain funding");
+    console.log("6) client init");
+    console.log("7) client set hello world");
+    console.log("8) explain that the other client isnt invited");
+    console.log("9) fund the other client");
+    console.log("10) try client2 set key value");
+    console.log("11) it doesnt work");
+    console.log("12) client1 invite client2...");
+    console.log("13) client2 set key value");
+    console.log("14) it works!");
     process.exit();
     this.props = await this.prompt([
       {
