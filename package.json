@@ -9,7 +9,7 @@
   "license": "GPLv3",
   "dependencies": {
     "axios": "^0.18.0",
-    "bsv": "0.26.4",
+    "bsv": "0.26.5",
     "circular-buffer": "^1.0.2",
     "eventsource": "^1.0.7",
     "fastest-validator": "^0.6.17",
