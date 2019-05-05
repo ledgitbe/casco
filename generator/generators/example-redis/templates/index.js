@@ -2,6 +2,8 @@ const ledgit = require('ledgit');
 const router = require('ledgit/lib/middleware/router-s2json');
 const logger = require('ledgit/lib/middleware/logger');
 const validator = require('ledgit/lib/middleware/validator');
+const redis = require('redis');
+const client = redis.createClient();
 
 require('dotenv').config();
 
