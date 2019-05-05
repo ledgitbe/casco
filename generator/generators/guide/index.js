@@ -34,24 +34,6 @@ module.exports = class extends Generator {
 
     await this.waitForEnter();
     process.stdout.write('\x1Bc');
-    //
-    //console.log("1) Generate the project as usual");
-    //console.log(") Don't use composeWith(...) because we need to access all the generated variables for the tutorial instructions");
-    //console.log(") This means embedding clients into these templates and not using composeWith(...)");
-    //console.log("2) Instruct user to open new terminal and cd into new project");
-    //console.log("3) Instruct user to run `npm start`");
-    //console.log("4) Instruct user to open new terminal again and run ./client-*.js");
-    //console.log("5) Explain funding");
-    //console.log("6) client init");
-    //console.log("7) client set hello world");
-    //console.log("8) explain that the other client isnt invited");
-    //console.log("9) fund the other client");
-    //console.log("10) try client2 set key value");
-    //console.log("11) it doesnt work");
-    //console.log("12) client1 invite client2...");
-    //console.log("13) client2 set key value");
-    //console.log("14) it works!");
-    //process.exit();
 
     this.props = {};
     this.props.name = "BitcoinKeyValueTutorial";
@@ -134,15 +116,8 @@ module.exports = class extends Generator {
     await this.waitForEnter();
     process.stdout.write('\x1Bc');
     log("");
-    log(chalk.blue(`Open a ${chalk.bold("another")} terminal window and navigate again to the `, chalk.yellow(this.props.name), "directory."));
+    log(chalk.blue(`Open ${chalk.bold("another")} terminal window and navigate again to the`, chalk.yellow(this.props.name), "directory."));
     log(chalk.blue("In this terminal window, run the following command:"));
-    log("");
-
-
-    await this.waitForEnter();
-    process.stdout.write('\x1Bc');
-
-    log(chalk.blue("In the other terminal window, run the following command:"));
     log("");
     log(chalk.red(`node ${this.props.client1name}`));
     log("");
@@ -151,13 +126,17 @@ module.exports = class extends Generator {
     log(chalk.blue("Fund the address with a few satohis (5000 will do)"));
     log("");
     log(chalk.green("The private key is stored in"), chalk.yellow(`.env.client-${this.props.client1.ADDRESS}`));
+    log(chalk.cyan("After this tutorial, you can always get your satoshis back with this command:"))
+    log(chalk.red(`node ${this.props.client1name} --refund <YOUR ADDRESS>`));
+    log("");
 
     await this.waitForEnter();
     process.stdout.write('\x1Bc');
-
-    log(chalk.green("Great! Now you should have one terminal displaying 'Syncing complete', and the other terminal is ready with your funded client"));
     log("");
-    log(chalk.blue("Run the following command to initialize your application:"))
+    log(chalk.green("Great!"));
+    log(chalk.green("Now you should have one terminal displaying 'Syncing complete', and the other terminal is ready with your funded client"));
+    log("");
+    log(chalk.blue("Run the following command inside your client terminal to initialize your application:"))
     log("");
     log(chalk.red(`node ${this.props.client1name} init`));
     log("");
@@ -166,9 +145,8 @@ module.exports = class extends Generator {
 
     await this.waitForEnter();
     process.stdout.write('\x1Bc');
-
     log("");
-    log(chalk.green(`Great job! You've made ${chalk.yellow(this.props.client1name)} the first participant of your application.`));
+    log(chalk.green(`Great job! You've made ${chalk.yellow(this.props.client1.ADDRESS)} the first participant of your application.`));
     log(chalk.green(`Let's make another transaction.`));
     log("");
     log(chalk.blue(`Run the following command and see how the state changes in your application`));
@@ -193,28 +171,62 @@ module.exports = class extends Generator {
     await this.waitForEnter();
     process.stdout.write('\x1Bc');
     log("");
-    log(chalk.blue("Go back to the main application and press CTRL-C inside the window to close main application."));
-    log(chalk.blue("Run"), chalk.red("node index.js"), chalk.blue("again. And watch how the application enters the same state again"));
-    log(chalk.blue("Nothing is stored locally, this is all on the blockchain!"));
+    log(chalk.blue("Go back to the main application and press CTRL-C inside the window to close the main application."));
+    log("");
+    log(chalk.blue("Run"), chalk.red("node index.js"), chalk.blue("again."));
+    log("");
+    log(chalk.blue("Watch how the application enters the same state again."));
+    log(chalk.blue("Nothing is stored locally, everything is on the blockchain! \\(^o^)/"));
     log("");
 
     await this.waitForEnter();
     process.stdout.write('\x1Bc');
     log("");
     log(chalk.green("So what about the other client?"));
+    log("");
     log(chalk.blue("Run the following command to see the address of the second client:"));
     log("");
     log(chalk.red(`node ${this.props.client2name}`));
     log("");
     log(chalk.blue("Fund this client as well with some satoshis (about 5000 will do)"));
     log("");
+    log(chalk.cyan("After this tutorial, you can always get your satoshis back with this command:"))
+    log(chalk.red(`node ${this.props.client1name} --refund <YOUR ADDRESS>`));
+    log("");
 
     await this.waitForEnter();
     process.stdout.write('\x1Bc');
+    log("");
+    log(chalk.green("Now that your second client is also funded, try the following command and watch what happens:"))
+    log("");
+    log(chalk.red(`node ${this.props.client2name} set intruder alert`));
+    log("");
 
+    await this.waitForEnter();
+    process.stdout.write('\x1Bc');
+    log("");
+    log(chalk.green("The transaction from your second client did not impact the state!"));
+    log("");
+    log(chalk.blue("Have the first client invite the second client to the party:"));
+    log("");
+    log(chalk.red(`node ${this.props.client1name} invite ${this.props.client2.ADDRESS}`));
+    log("");
+    log(chalk.blue("Then use the second client again to set a key-value pair"));
+    log("");
+    log(chalk.red(`node ${this.props.client2name} set thiskey wassetbyclient2`));
+    log("");
+    log(chalk.green("Notice how the state changes"));
+    log("");
 
-
+    await this.waitForEnter();
+    process.stdout.write('\x1Bc');
+    log("");
+    log(chalk.green("Congratulations! You've made it to the end!"));
+    log("");
+    log(chalk.blue("Go check out the code!"));
+    log("");
+    log(chalk.cyan("To get all your satoshis back:"))
+    log(chalk.red(`node ${this.props.client1name} --refund <YOUR ADDRESS>`));
+    log(chalk.red(`node ${this.props.client2name} --refund <YOUR ADDRESS>`));
   }
-
-
 };
