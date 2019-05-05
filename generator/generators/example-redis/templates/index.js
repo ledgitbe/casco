@@ -34,6 +34,12 @@ function requiresInit(req, res, next) {
   }
 }
 
+// This will store our state
+const state = {
+  initialized: false,
+  participants: [],
+};
+
 const app = ledgit();
 
 app.use(router);
