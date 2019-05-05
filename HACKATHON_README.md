@@ -34,6 +34,9 @@ We took the time in this hackathon to create **Bitcoin Instant Messenger (BiM) t
   the framework such as middleware, routing, argument validation, ecies decryption and more.
 
 - **We added 2 new types of contract clients to the generator.**
+   
+  Clients are very useful in debugging the applications a developer is writing. Being able to just generate a new one is a huge time saver.
+
 - **After all this, we decided to experiment with a chat application on Bitcoin**
    
   Documentation for this can be found in [chatexperiment](chatexperiment/README.md)
