@@ -32,6 +32,11 @@ We took the time in this hackathon to do a **complete rewrite of the project gen
   the framework such as middleware, routing, argument validation, ecies decryption and more.
 
 - **We added 2 new types of contract clients to the generator.**
+- **After all this, we decided to experiment with a chat application on Bitcoin**
+   
+  Documentation for this can be found in [chatexperiment](chatexperiment/README.md)
+
+  
 
 
 ### Public release
