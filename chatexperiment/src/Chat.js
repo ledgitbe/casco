@@ -5,6 +5,8 @@ import Datapay from 'datapay';
 import Ledgit from 'ledgit';
 import { filterAddress, decrypt, encrypt } from './middleware.js';
 
+import QRCode from 'qrcode.react';
+
 const bsv = Datapay.bsv;
 
 class Chat extends Component {
@@ -73,7 +75,9 @@ class Chat extends Component {
 
   createKeys() {
     let privKey = bsv.PrivateKey.fromRandom();
-    this.setState({PRIVATE_KEY: privKey.toWIF()});
+    const address = bsv.Address.fromPrivateKey(bsv.PrivateKey.fromWIF(privKey.toString()));
+    
+    this.setState({PRIVATE_KEY: privKey.toWIF(), fromAddress: address.toString()});
   }
 
   componentDidMount() {
@@ -138,7 +142,15 @@ class Chat extends Component {
         <input type="button" onClick={this.createKeys} value="Create Private key" />
         </form>
       )}
-
+      { !this.state.formVisible && (
+        <div>
+          Fund local wallet: <br />
+      
+          <QRCode value={this.state.fromAddress} /> <br />
+          My public key:<br />
+          {bsv.PublicKey.fromPrivateKey(bsv.PrivateKey.fromWIF(this.state.PRIVATE_KEY)).toString()}
+        </div>
+      )}
       <Launcher
         mute={true}
         agentProfile={{
