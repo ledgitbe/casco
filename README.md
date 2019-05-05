@@ -16,19 +16,27 @@ We took the time in this hackathon to do a **complete rewrite of the project gen
 **Here's what we did:**
 
 - **We built an interactive step by step guide that allows anyone to create a permissioned key-value store on Bitcoin in less than 5 minutes.**
+
   Try it out yourself:
-  `npm install -g yo generator-ledgit`
-  `yo ledgit`
+  
+  ```
+  npm install -g yo generator-ledgit
+  yo ledgit
+  ```
+  
   Then choose the `Getting started guide (hackathon)` option.
+ 
 - **We went from 1 to 10 different example projects that can be generated within seconds.**
+
   The example projects help new developers become familiar with the features of
   the framework such as middleware, routing, argument validation, ecies decryption and more.
+
 - **We added 2 new types of contract clients to the generator.**
 
 
 
 
-
+TODO: ADD PICTURE URLS
 
 
 # Default README below
@@ -85,9 +93,9 @@ We recommend new users to use the **Getting Started Guide** as it provides a ste
 | -------------  |  		  -----:|
 | Empty     			 | Up to you|
 | Example-ping-pong      | 1 |
-| Example-redis 		 | 3  |
-| Example-router 		 |  5 |
-| Example-rpc            |	6 |
+| Example-redis 		 | 2  |
+| Example-router 		 |  3 |
+| Example-rpc            |	4 |
 | Tutorial-statemachine  |   |
 | Tutorial-argumentvalidation |   |
 | Tutorial-custom-middleware  |   |
