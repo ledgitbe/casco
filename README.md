@@ -50,12 +50,12 @@ With Ledgit you can process Bitcoin transactions as if you were writing a web se
 const app = ledgit();
 
 app.use((req, res) => {
-    console.log(`New Transaction from ${req.caller}`);
+    console.log(`New Transaction! Hash: ${req.tx.tx.h}`);
 });
 
-app.listen('bit://14yDSfMug1RxTRfAKC1mrfD1LqoBGSXUWc');
+app.listen('bit://1Ks6qfewg1xovgZsJFkkgQdcyFzNeH7Pv5');
 ```
-The above application will listen to all transactions with *19HxigV4QyBv3tHpQVcUEQyq1pzZVdoAut* as the Bitcom protocol id.
+The above application will listen to all transactions with *1Ks6qfewg1xovgZsJFkkgQdcyFzNeH7Pv5* as the Bitcom protocol id.
 
 ## Install
 ### Quick install
@@ -161,6 +161,7 @@ or with this shortcut:
 - Support for handling block and reorg events
 - Support for custom sync algorithms
 - Support for subrouters
+- Support for syncing with a full node in addition to BitDB
 
 
 
