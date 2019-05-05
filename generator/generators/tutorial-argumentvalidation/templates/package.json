@@ -9,12 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bsv": "^0.26.5",
-    "brisk": "latest",
+    "ledgit": "latest",
     "datapay": "0.0.14",
     "dotenv": "^7.0.0",
     "qrcode-terminal": "^0.12.0"
   },
   "devDependencies": {},
-  "description": "Brisk hello world app"
+  "description": "Example application showing validation middleware"
 }
