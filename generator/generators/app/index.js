@@ -16,7 +16,7 @@ module.exports = class extends Generator {
   }
 
   async prompting() {
-    const choices =  ['New Project', 'New Client'];
+    const choices =  ['Getting Started guide (hackathon)', 'New Project', 'New Client'];
 
     console.log("Welcome to The Ledgit Bitcoin Application Framework");
 
@@ -31,12 +31,22 @@ module.exports = class extends Generator {
     ]);
 
     switch (props.action) {
-      case choices[1]:
+      case choices[0]:
+        this.composeWith(require.resolve('../guide'));
+        break;
+      case choices[2]:
         this.composeWith(require.resolve('../client'));
         break;
       default:
-        const project_types = getDirectories(path.join(__dirname, '../project/templates/'));
-        const nested_props = await this.prompt([
+        let blacklist = ['app', 'client', 'guide'];
+        let project_types = getDirectories(path.join(__dirname, '..'));
+
+        // Exclude blacklist from choices
+        project_types = project_types.filter(function(item) {
+          return blacklist.indexOf(item) < 0;
+        });
+
+        let choice = await this.prompt([
           {
             type: "list",
             name: "project_type",
@@ -46,7 +56,7 @@ module.exports = class extends Generator {
           },
         ]);
 
-        this.composeWith(require.resolve('../project'),{template: nested_props.project_type});
+        this.composeWith(require.resolve('../' + choice.project_type));
         break;
     }
   }

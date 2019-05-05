@@ -1,6 +1,6 @@
 const Generator = require('yeoman-generator');
 const path = require('path');
-const fs = require("fs");
+const mkdirp = require('mkdirp');
 const { createKey, getBlockHeight } = require('../../util');
 
 module.exports = class extends Generator {
@@ -10,8 +10,6 @@ module.exports = class extends Generator {
   }
 
   async prompting() {
-    this.sourceRoot(path.join(__dirname, 'templates', this.options.template || 'empty'));
-
     this.props = await this.prompt([
       {
         type: "input",
