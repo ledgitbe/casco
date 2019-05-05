@@ -54,7 +54,7 @@ module.exports = class extends Generator {
     this.fs.write('.env', Object.entries(contractKeyPair).map(([k,v]) => `${k}=${v}`).join('\n'));
 
     // Create client
-    this.composeWith(require.resolve('../client'),{key:clientKeyPay});
+    this.composeWith(require.resolve('../client'),{key:clientKeyPair});
   }
 
   end() {
