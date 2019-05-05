@@ -19,8 +19,10 @@ We took the time in this hackathon to do a **complete rewrite of the project gen
 
   Try it out yourself:
   
-  `npm install -g yo generator-ledgit`
-  `yo ledgit`
+  ```
+  npm install -g yo generator-ledgit
+  yo ledgit
+  ```
   
   Then choose the `Getting started guide (hackathon)` option.
  
