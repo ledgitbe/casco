@@ -112,7 +112,6 @@ We recommend new users to use the **Getting Started Guide** as it provides a ste
 | Empty                       | Up to you |
 | Example-ping-pong           | 1 |
 | Example-redis               | 2 |
-| Example-router              | 3 |
 | Example-payments            | 1 |
 | Tutorial-statemachine       |   |
 | Tutorial-argumentvalidation |   |
