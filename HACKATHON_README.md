@@ -3,7 +3,7 @@
 This project started 2 months ago as an experiment that dispatched Bitcoin transactions as actions on a [Redux](https://redux.js.org/) store. Over time it evolved into a general purpose Bitcoin transaction handling framework, employing the same design pattern as is used by the popular web server framework [ExpressJS](https://expressjs.com/)
 
 
-*We realise there is a lot of prior work here, but the framework itself is not our hackathon entry.*
+*We realise there is prior work here, but the framework itself is not our hackathon entry.*
 
 
 We took the time in this hackathon to do a **complete rewrite of the project generator to vastly improve the developer onboarding experience.**
