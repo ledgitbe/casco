@@ -12,19 +12,49 @@ if (process.argv.length < 3) {
   QRCode.generate(process.env.ADDRESS, { small: true });
   process.exit(0);
 }
-const func = process.argv[2];
-const args = process.argv.slice(3);
 
-Datapay.send(
-  {
-    data: [process.env.PREFIX, JSON.stringify([func, ...args])],
-    pay: { key: process.env.PRIVATE_KEY }
-  },
-  (err, txid) => { 
+if (process.argv[2] === '--refund') {
+  Datapay.connect().getUnspentUtxos(process.env.ADDRESS, (err, utxos) => {
     if (err) {
-      console.log(err)
+      console.log("Error: ", err)
     } else {
-      console.log(`Transaction sent. ${txid}`);
+      var balance = 0;
+      utxos.forEach((utxo) => {
+        balance+=utxo.satoshis;
+      });
+      Datapay.send(
+        {
+          pay: { 
+            key: process.env.PRIVATE_KEY,
+            to: [{address: process.argv[3],value: balance-400}]
+          }
+
+        },
+        (err, txid) => { 
+          if (err) {
+            console.log(err)
+          } else {
+            console.log(`Transaction sent. ${txid}`);
+          }
+        }
+      );
     }
-  }
-);
+  })
+} else {
+  const func = process.argv[2];
+  const args = process.argv.slice(3);
+
+  Datapay.send(
+    {
+      data: [process.env.PREFIX, JSON.stringify([func, ...args])],
+      pay: { key: process.env.PRIVATE_KEY }
+    },
+    (err, txid) => { 
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(`Transaction sent. ${txid}`);
+      }
+    }
+  );
+}
