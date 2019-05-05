@@ -78,4 +78,4 @@ app.use('confirm', (req, res) => {
   }
 });
 
-app.listen(`bit://${process.env.ADDRESS}`, 570000);
+app.listen(`bit://${process.env.ADDRESS}`, <%= height %>);
