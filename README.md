@@ -13,7 +13,7 @@ We took the time in this hackathon to do a **complete rewrite of the project gen
 - All our efforts during this hackathon were on the `generator` directory
 
 
-**Here's what we did:**
+## Here's what we did
 
 - **We built an interactive step by step guide that allows anyone to create a permissioned key-value store on Bitcoin in less than 5 minutes.**
 
@@ -34,9 +34,18 @@ We took the time in this hackathon to do a **complete rewrite of the project gen
 - **We added 2 new types of contract clients to the generator.**
 
 
+### Public release
 
+We will release the entire framework under the GNU GPLv3 license, but right now
+the repository is not in a state ready for release yet. Right now our focus is 
+on the hackathon. We will prepare the repository for public release after
+the hackathon.
 
+### Pictures!
 TODO: ADD PICTURE URLS
+
+
+
 
 
 # Default README below
