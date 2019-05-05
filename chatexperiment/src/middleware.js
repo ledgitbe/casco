@@ -1,4 +1,5 @@
-const ECIES = {};
+const bsv = require('bsv');
+const ECIES = require('bsv/ecies');
 const { PrivateKey, PublicKey } = bsv;
 
 module.exports.filterAddress = (addresses) => {

@@ -1,17 +1,19 @@
 import React, {Component} from 'react'
 import {Launcher} from 'react-chat-window'
 
-//import Datapay from 'datapay';
-//import Ledgit from 'ledgit';
+import Datapay from 'datapay';
+import Ledgit from 'ledgit';
 import { filterAddress, decrypt, encrypt } from './middleware.js';
 
 const toAddress = "1EDTTUAhcZdPTE2BbzzgUdAEautJ9VrMoU";
+const PREFIX = "1AFrHuW9zV86VP1zWxZJpEDSvbsWvJz6wN"
+const PRIVATE_KEY = "KwF57YW87KYpJV1BP1WABhWqt8vRcQNoMgD4vTiaL8qphFWWJ5Fq";
 
 function send(message) {
   Datapay.send(
     {
-      data: [process.env.PREFIX, toAddress, encrypt(process.env.PRIVATE_KEY,"02584ddc69b0380d33f8c3994e8a37a9a5c47861dbce4d792136495b75d523796a",message)],
-      pay: { key: process.env.PRIVATE_KEY }
+      data: [PREFIX, toAddress, encrypt(PRIVATE_KEY,"02584ddc69b0380d33f8c3994e8a37a9a5c47861dbce4d792136495b75d523796a",message)],
+      pay: { key: PRIVATE_KEY }
     },
     (err, txid) => { 
       if (err) {
@@ -39,10 +41,12 @@ class Chat extends Component {
 
     this.app.use(filterAddress(["1Ar4Km1WzSBHgcQzU5HXy5DNKmbfPhRFsH", "1EDTTUAhcZdPTE2BbzzgUdAEautJ9VrMoU"]));
 
-    this.app.use(decrypt("KwF57YW87KYpJV1BP1WABhWqt8vRcQNoMgD4vTiaL8qphFWWJ5Fq", "02584ddc69b0380d33f8c3994e8a37a9a5c47861dbce4d792136495b75d523796a"));
+    this.app.use(decrypt(PRIVATE_KEY, "02584ddc69b0380d33f8c3994e8a37a9a5c47861dbce4d792136495b75d523796a"));
 
     this.app.use((req, res) => {
-      this._sendMessage(req.message, true);
+      if (req.tx.in[0].e.a === toAddress) {
+        this._sendMessage(req.message, true);
+      }
     });
 
     this.app.listen("bit://1AFrHuW9zV86VP1zWxZJpEDSvbsWvJz6wN", 50000);
@@ -53,6 +57,7 @@ class Chat extends Component {
       messageList: [...this.state.messageList, message]
     })
     console.log(this.state.messageList);
+    send(message.data.text);
   }
 
   _sendMessage(text, fromThem) {
