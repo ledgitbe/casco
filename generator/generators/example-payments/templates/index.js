@@ -16,7 +16,7 @@ app.use((req, res) => {
   // Find the tx out that has our address in it
   let output = req.tx.out.find(out => out.e.a === process.env.ADDRESS);
 
-  let value = output.e.a;
+  let value = output.e.v;
 
   console.log("Value: ", value, "Satoshis");
 });
