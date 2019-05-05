@@ -6,6 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ledgit bvba",
+  "license": "GPLv3",
   "dependencies": {
     "axios": "^0.18.0",
     "bsv": "^0.26.5",
@@ -15,9 +16,9 @@
     "queue": "^6.0.1",
     "umr": "0.0.4"
   },
-  "directories": {
-    "lib": "lib"
-  },
+  "files": [
+    "lib"
+  ],
   "devDependencies": {
     "datapay": "0.0.14",
     "dotenv": "^7.0.0",

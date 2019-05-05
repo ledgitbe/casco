@@ -3,6 +3,7 @@
   "version": "0.0.10",
   "description": "",
   "author": "Ledgit bvba",
+  "license": "GPLv3",
   "files": [
     "generators",
     "util"
