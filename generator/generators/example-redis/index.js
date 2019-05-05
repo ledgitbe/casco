@@ -36,6 +36,8 @@ module.exports = class extends Generator {
 
   async writing() {
     let contractKeyPair = createKey();
+    let clientKeyPair = createKey();
+    
     // Save contractAddress inside .yo-rc.json for composability of client
     this.config.set("PREFIX", contractKeyPair.ADDRESS);
     this.config.set("PREFIX_PUBLIC_KEY", contractKeyPair.PUBLIC_KEY);
@@ -45,15 +47,14 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('*'),
       this.destinationRoot(),
-      { ADDRESS: contractKeyPair.ADDRESS, height: await getBlockHeight(), name: this.props.name }
+      { ADDRESS: contractKeyPair.ADDRESS, height: await getBlockHeight(), name: this.props.name, CLIENT_ADDRESS:clientKeyPair.ADDRESS }
     );
 
     // Write contract keypair details to .env
     this.fs.write('.env', Object.entries(contractKeyPair).map(([k,v]) => `${k}=${v}`).join('\n'));
 
-    // Create two clients
-    this.composeWith(require.resolve('../client'));
-    this.composeWith(require.resolve('../client'));
+    // Create client
+    this.composeWith(require.resolve('../client'),{key:clientKeyPay});
   }
 
   end() {
