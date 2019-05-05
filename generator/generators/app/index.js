@@ -38,12 +38,20 @@ module.exports = class extends Generator {
         this.composeWith(require.resolve('../client'));
         break;
       default:
-        let blacklist = ['app', 'client', 'guide'];
+        let blacklist = ['app', 'client', 'guide', /^client/];
         let project_types = getDirectories(path.join(__dirname, '..'));
 
         // Exclude blacklist from choices
         project_types = project_types.filter(function(item) {
-          return blacklist.indexOf(item) < 0;
+          var isBlacklisted = false;
+          blacklist.forEach((blacklistItem) => {
+            if(item.match(blacklistItem)) {
+              isBlacklisted = true;
+            }
+          });
+          if (!isBlacklisted) {
+            return item;
+          }
         });
 
         let choice = await this.prompt([
