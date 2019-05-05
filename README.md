@@ -93,9 +93,9 @@ We recommend new users to use the **Getting Started Guide** as it provides a ste
 | -------------  |  		  -----:|
 | Empty     			 | Up to you|
 | Example-ping-pong      | 1 |
-| Example-redis 		 | 3  |
-| Example-router 		 |  5 |
-| Example-rpc            |	6 |
+| Example-redis 		 | 2  |
+| Example-router 		 |  3 |
+| Example-rpc            |	4 |
 | Tutorial-statemachine  |   |
 | Tutorial-argumentvalidation |   |
 | Tutorial-custom-middleware  |   |
