@@ -46,6 +46,10 @@ class Chat extends Component {
     this.app.use((req, res) => {
       if (req.tx.in[0].e.a === toAddress) {
         this._sendMessage(req.message, true);
+        console.log(1)
+      } else {
+        console.log(2)
+        this._sendMessage(req.message, false);
       }
     });
 
@@ -53,10 +57,10 @@ class Chat extends Component {
   }
 
   _onMessageWasSent(message) {
-    this.setState({
-      messageList: [...this.state.messageList, message]
-    })
-    console.log(this.state.messageList);
+    // this.setState({
+    //   messageList: [...this.state.messageList, message]
+    // })
+    // console.log(this.state.messageList);
     send(message.data.text);
   }
 
