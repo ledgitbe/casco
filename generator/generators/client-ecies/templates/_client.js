@@ -10,6 +10,7 @@ require('dotenv').config({ path: path.resolve(process.cwd(), `.env.${path.basena
 
 if (process.argv.length < 3) {
   console.log(`Usage: ./client-${process.env.ADDRESS}.js func [args...]`);
+  console.log(`Refund remaining balance: ./client-${process.env.ADDRESS}.js --refund [ADDRESS]`);
   console.log(`Address: ${process.env.ADDRESS}`);
   QRCode.generate(process.env.ADDRESS, { small: true });
   process.exit(0);
