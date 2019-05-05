@@ -35,7 +35,23 @@ module.exports = class extends Generator {
         this.composeWith(require.resolve('../guide'));
         break;
       case choices[2]:
-        this.composeWith(require.resolve('../client'));
+        let client_types = getDirectories(path.join(__dirname, '..'));
+        // include whitelist choices
+        client_types = client_types.filter(function(item) {
+          return item.startsWith('client');
+        });
+        
+        let client_choice = await this.prompt([
+          {
+            type: "list",
+            name: "client_type",
+            message: "Choose which client to generate",
+            default: "client",
+            choices: client_types,
+          },
+        ]);
+
+        this.composeWith(require.resolve('../' + client_choice.client_type));
         break;
       default:
         let blacklist = ['app', 'client', 'guide', /^client/];
@@ -54,7 +70,7 @@ module.exports = class extends Generator {
           }
         });
 
-        let choice = await this.prompt([
+        let project_choice = await this.prompt([
           {
             type: "list",
             name: "project_type",
@@ -64,7 +80,7 @@ module.exports = class extends Generator {
           },
         ]);
 
-        this.composeWith(require.resolve('../' + choice.project_type));
+        this.composeWith(require.resolve('../' + project_choice.project_type));
         break;
     }
   }
