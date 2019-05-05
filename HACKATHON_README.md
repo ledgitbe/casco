@@ -1,6 +1,7 @@
 # HACKATHON README: BITCOIN PROJECT GENERATOR-HACKATHON 2019
 
-This project started 2 months ago as an experiment that dispatched Bitcoin transactions as actions on a [Redux](https://redux.js.org/) store. Over time it evolved into a general purpose Bitcoin transaction handling framework, employing the same design pattern as is used by the popular web server framework [ExpressJS](https://expressjs.com/)
+
+The framework started 2 months ago as an experiment that dispatched Bitcoin transactions as actions on a [Redux](https://redux.js.org/) store. Over time it evolved into a general purpose Bitcoin transaction handling framework, employing the same design pattern as is used by the popular web server framework [ExpressJS](https://expressjs.com/)
 
 
 *We realise there is prior work here, but the framework itself is not our hackathon entry.*
@@ -12,6 +13,7 @@ We took the time in this hackathon to do a **complete rewrite of the project gen
 - We expressly refrained from making changes to the core of the framework inside the `lib` directory.
 - All our efforts during this hackathon were on the `generator` directory
 
+We took the time in this hackathon to create Bitcoin Instant Messenger (BiM) that can be found in the chatexperiment folder
 
 ## Here's what we did
 
