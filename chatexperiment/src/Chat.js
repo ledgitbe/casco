@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
 import {Launcher} from 'react-chat-window'
 
-import Ledgit from 'ledgit';
-import Datapay from 'datapay';
+//import Datapay from 'datapay';
+//import Ledgit from 'ledgit';
 import { filterAddress, decrypt, encrypt } from './middleware.js';
 
+const toAddress = "1EDTTUAhcZdPTE2BbzzgUdAEautJ9VrMoU";
+
 function send(message) {
-  datapay.send(
+  Datapay.send(
     {
       data: [process.env.PREFIX, toAddress, encrypt(process.env.PRIVATE_KEY,"02584ddc69b0380d33f8c3994e8a37a9a5c47861dbce4d792136495b75d523796a",message)],
       pay: { key: process.env.PRIVATE_KEY }
