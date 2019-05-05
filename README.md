@@ -90,16 +90,16 @@ We recommend new users to use the **Getting Started Guide** as it provides a ste
 **New Project** will prompt a user if they would like to generate a project from an example or run a tutorial. The options available are:
 
 | Option         | Complexity 1-10  |
-| -------------  |  		  -----:|
-| Empty     			 | Up to you|
-| Example-ping-pong      | 1 |
-| Example-redis 		 | 2  |
-| Example-router 		 |  3 |
-| Example-rpc            |	4 |
-| Tutorial-statemachine  |   |
+| -------------  |  -----:|
+| Empty                       | Up to you |
+| Example-ping-pong           | 1 |
+| Example-redis               | 2 |
+| Example-router              | 3 |
+| Example-payments            | 1 |
+| Tutorial-statemachine       |   |
 | Tutorial-argumentvalidation |   |
 | Tutorial-custom-middleware  |   |
-| Tutorial-simple-router 	  |   |
+| Tutorial-simple-router      |   |
 | Tutorial-standard-middleware|   |
 
 You will be asked to name your project and a new folder with the set name will be created.
