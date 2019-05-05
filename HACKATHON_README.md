@@ -1,10 +1,11 @@
 # HACKATHON README: BITCOIN PROJECT GENERATOR-HACKATHON 2019
 
+![Screenshot](generator/screenshot.jpg)
 
-The framework started 2 months ago as an experiment that dispatched Bitcoin transactions as actions on a [Redux](https://redux.js.org/) store. Over time it evolved into a general purpose Bitcoin transaction handling framework, employing the same design pattern as is used by the popular web server framework [ExpressJS](https://expressjs.com/)
+The development library started 2 months ago as an experiment that dispatched Bitcoin transactions as actions on a [Redux](https://redux.js.org/) store. Over time it evolved into a general purpose Bitcoin transaction handling framework, employing the same design pattern as is used by the popular web server framework [ExpressJS](https://expressjs.com/)
 
 
-*We realise there is prior work here, but the framework itself is not our hackathon entry.*
+*We realise there is prior work here, but the application development library is not our hackathon entry. The generator is our entry.*
 
 
 We took the time in this hackathon to do a **complete rewrite of the project generator to vastly improve the developer onboarding experience.**
@@ -19,7 +20,9 @@ We took the time in this hackathon to create **Bitcoin Instant Messenger (BiM) t
 
 - **We built an interactive step by step guide that allows anyone to create a permissioned key-value store on Bitcoin in less than 5 minutes.**
 
-  Try it out yourself:
+  Watch the guide on [asciicinema](https://asciinema.org/a/j6nie6RTIzbFaiuD8fwCDRgtL)
+
+  Or better yet, try it out yourself:
   
   ```
   npm install -g yo generator-ledgit
