@@ -6,16 +6,13 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "redis": "^2.8.0",
-    "bsv": "^0.26.5",
-    "brisk": "latest",
+    "ledgit": "latest",
     "datapay": "0.0.14",
     "dotenv": "^7.0.0",
     "qrcode-terminal": "^0.12.0"
   },
   "devDependencies": {},
-  "description": "Brisk hello world app"
+  "description": "Agent updates key value pairs in redis based on Bitcoin transactions. This could be expanded to create global database synchronization."
 }
