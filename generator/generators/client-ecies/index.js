@@ -9,7 +9,7 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    let keypair = createKey();
+    let keypair = this.options.key || createKey();
 
     let data = Object.assign(
       {}, 
