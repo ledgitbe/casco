@@ -1,4 +1,4 @@
-# HACKATHON README
+# HACKATHON README: BITCOIN PROJECT GENERATOR-HACKATHON 2019
 
 This project started 2 months ago as an experiment that dispatched Bitcoin transactions as actions on a [Redux](https://redux.js.org/) store. Over time it evolved into a general purpose Bitcoin transaction handling framework, employing the same design pattern as is used by the popular web server framework [ExpressJS](https://expressjs.com/)
 
