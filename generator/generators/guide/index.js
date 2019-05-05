@@ -216,9 +216,17 @@ module.exports = class extends Generator {
     log(chalk.red(`node ${this.props.client2name} set thiskey wassetbyclient2`));
     log("");
     log(chalk.green("Notice how the state changes"));
+    log("");
 
-
+    await this.waitForEnter();
+    process.stdout.write('\x1Bc');
+    log("");
+    log(chalk.green("Congratulations! You've made it to the end!"));
+    log("");
+    log(chalk.blue("Go check out the code!"));
+    log("");
+    log(chalk.cyan("To get all your satoshis back:"))
+    log(chalk.red(`node ${this.props.client1name} --refund <YOUR ADDRESS>`));
+    log(chalk.red(`node ${this.props.client2name} --refund <YOUR ADDRESS>`));
   }
-
-
 };
