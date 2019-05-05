@@ -16,19 +16,27 @@ We took the time in this hackathon to do a **complete rewrite of the project gen
 **Here's what we did:**
 
 - **We built an interactive step by step guide that allows anyone to create a permissioned key-value store on Bitcoin in less than 5 minutes.**
+
   Try it out yourself:
-  `npm install -g yo generator-ledgit`
-  `yo ledgit`
+  
+  ```
+  npm install -g yo generator-ledgit
+  yo ledgit
+  ```
+  
   Then choose the `Getting started guide (hackathon)` option.
+ 
 - **We went from 1 to 10 different example projects that can be generated within seconds.**
+
   The example projects help new developers become familiar with the features of
   the framework such as middleware, routing, argument validation, ecies decryption and more.
+
 - **We added 2 new types of contract clients to the generator.**
 
 
 
 
-
+TODO: ADD PICTURE URLS
 
 
 # Default README below
@@ -42,12 +50,12 @@ With Ledgit you can process Bitcoin transactions as if you were writing a web se
 const app = ledgit();
 
 app.use((req, res) => {
-    console.log(`New Transaction from ${req.caller}`);
+    console.log(`New Transaction! Hash: ${req.tx.tx.h}`);
 });
 
-app.listen('bit://14yDSfMug1RxTRfAKC1mrfD1LqoBGSXUWc');
+app.listen('bit://1Ks6qfewg1xovgZsJFkkgQdcyFzNeH7Pv5');
 ```
-The above application will listen to all transactions with *19HxigV4QyBv3tHpQVcUEQyq1pzZVdoAut* as the Bitcom protocol id.
+The above application will listen to all transactions with *1Ks6qfewg1xovgZsJFkkgQdcyFzNeH7Pv5* as the Bitcom protocol id.
 
 ## Install
 ### Quick install
@@ -85,9 +93,9 @@ We recommend new users to use the **Getting Started Guide** as it provides a ste
 | -------------  |  		  -----:|
 | Empty     			 | Up to you|
 | Example-ping-pong      | 1 |
-| Example-redis 		 | 3  |
-| Example-router 		 |  5 |
-| Example-rpc            |	6 |
+| Example-redis 		 | 2  |
+| Example-router 		 |  3 |
+| Example-rpc            |	4 |
 | Tutorial-statemachine  |   |
 | Tutorial-argumentvalidation |   |
 | Tutorial-custom-middleware  |   |
@@ -153,6 +161,7 @@ or with this shortcut:
 - Support for handling block and reorg events
 - Support for custom sync algorithms
 - Support for subrouters
+- Support for syncing with a full node in addition to BitDB
 
 
 

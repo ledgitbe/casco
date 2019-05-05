@@ -22,7 +22,7 @@ const app = ledgit();
  */
 
 function logger(req, res, next) {
-  console.log("Incoming transaction! Tx Hash: " + req.tx.h);
+  console.log("Incoming transaction! Tx Hash: " + req.tx.tx.h);
   next();
 }
 
