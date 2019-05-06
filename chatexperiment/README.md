@@ -39,7 +39,6 @@ To see the result of our work, check out [chatexperiment.getforge.io](https://ch
     return theirNextPublicKey;
   }
 }
-
 class PrivateKeyChain {
   constructor(theirPublicMasterKey, ourPrivateMasterKey) {
     this.theirPublicMasterKey = theirPublicMasterKey;
