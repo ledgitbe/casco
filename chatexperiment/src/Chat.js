@@ -153,6 +153,24 @@ class Chat extends Component {
           {bsv.PublicKey.fromPrivateKey(bsv.PrivateKey.fromWIF(this.state.PRIVATE_KEY)).toString()}
         </div>
       )}
+      <br /><br />
+      <div style={{textAlign:"left"}}>
+        1. Paste your Private Key in the "My Private Key" textbox or click the "Create Private key" button <br />
+        2. Your funding address, private key and public key are shown below the form<br />
+        3. Share your public key with a friend and ask him/her to do the same<br />
+        4. Paste your friend's public key in the "Friend's Public Key" textbox<br />
+        5. Start the chat by clicking the "Load Chat" button<br />
+        6. Fund the wallet shown below the form<br />
+      7. Start chatting in the chatbox on the right side of the screen<br /> <br />
+
+      Every message you post is encrypted and saved immutably on the blockchain. <br />
+      When loading already used keys your chat window will get the entire chat history from the blockchain. <br />
+      A user can keep sending messages while the counterparty is offline, <br />
+      the counterparty will receive the messages when he's online again.
+      
+      </div>
+
+
       <Launcher
         mute={true}
         agentProfile={agentProfile}
