@@ -20,7 +20,7 @@ We took the time in this hackathon to create **Bitcoin Instant Messenger (BiM) t
 
 - **We built an interactive step by step guide that allows anyone to create a permissioned key-value store on Bitcoin in less than 5 minutes.**
 
-  Watch the guide on [asciicinema](https://asciinema.org/a/j6nie6RTIzbFaiuD8fwCDRgtL)
+  Watch a screen recording on [asciicinema](https://asciinema.org/a/j6nie6RTIzbFaiuD8fwCDRgtL)
 
   Or better yet, try it out yourself:
   
