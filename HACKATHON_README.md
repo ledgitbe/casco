@@ -14,7 +14,7 @@ We took the time in this hackathon to do a **complete rewrite of the project gen
 - We expressly refrained from making changes to the core of the framework inside the `lib` directory.
 - All our efforts during this hackathon were on the `generator` directory
 
-We took the time in this hackathon to create **Bitcoin Instant Messenger (BiM) that can be found in the chatexperiment folder**
+With the remaining time we had, we experimented with a **chat application 'Bitcoin Instant Messenger' (BiM)**
 
 ## Here's what we did
 
@@ -42,7 +42,7 @@ We took the time in this hackathon to create **Bitcoin Instant Messenger (BiM) t
 
 - **After all this, we decided to experiment with a chat application on Bitcoin**
    
-  Documentation for this can be found in [chatexperiment](chatexperiment/README.md)
+   Please see the full write-up in the [chatexperiment](chatexperiment/README.md) directory.
 
   
 
