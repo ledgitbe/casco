@@ -38,24 +38,24 @@ To see the result of our work, check out [chatexperiment.getforge.io](https://ch
     theirNextPublicKey = bsv.PublicKey.fromPoint(theirNextPublicKey);
     return theirNextPublicKey;
   }
-}
-class PrivateKeyChain {
-  constructor(theirPublicMasterKey, ourPrivateMasterKey) {
-    this.theirPublicMasterKey = theirPublicMasterKey;
-    this.ourPrivateMasterKey = ourPrivateMasterKey;
-    this.S = theirPublicMasterKey.point.mul(ourPrivateMasterKey.toBigNumber()).getX().toString('hex');
   }
-
-  next(message) {
-    let nextSharedSecret = bsv.crypto.Hash.sha256(Buffer.from(`${this.S}${message}`));
-    nextSharedSecret = Buffer.from(nextSharedSecret, 'hex');
-    nextSharedSecret = bsv.crypto.BN.fromBuffer(nextSharedSecret, 'hex');
-    let ourNextPrivateKey = this.ourPrivateMasterKey.bn.add(nextSharedSecret);
-    ourNextPrivateKey = bsv.PrivateKey(ourNextPrivateKey);
-    return ourNextPrivateKey;
+  class PrivateKeyChain {
+    constructor(theirPublicMasterKey, ourPrivateMasterKey) {
+      this.theirPublicMasterKey = theirPublicMasterKey;
+      this.ourPrivateMasterKey = ourPrivateMasterKey;
+      this.S = theirPublicMasterKey.point.mul(ourPrivateMasterKey.toBigNumber()).getX().toString('hex');
+    }
+ 
+    next(message) {
+      let nextSharedSecret = bsv.crypto.Hash.sha256(Buffer.from(`${this.S}${message}`));
+      nextSharedSecret = Buffer.from(nextSharedSecret, 'hex');
+      nextSharedSecret = bsv.crypto.BN.fromBuffer(nextSharedSecret, 'hex');
+      let ourNextPrivateKey = this.ourPrivateMasterKey.bn.add(nextSharedSecret);
+      ourNextPrivateKey = bsv.PrivateKey(ourNextPrivateKey);
+      return ourNextPrivateKey;
+    }
   }
-}
-```
+  ```
 - We ran into issues in the PrivateKeyChain where N would overflow. Time was running short, we had 2 hours left.
 - We decided to leave the chat application in a working state so you can check it out.
 - Then we started writing this write-up
