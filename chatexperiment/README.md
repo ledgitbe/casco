@@ -15,7 +15,7 @@ To see the result of our work, check out [chatexperiment.getforge.io](https://ch
   
   OP_RETURN ENCRYPTEDMESSAGE
 - We used bsv's ECIES library
-- For the POC functionality's sake we decided on not using ephemeral keys. This way the sender of a message can still see his how message history.
+- For the POC functionality's sake we decided on not using ephemeral keys. This way the sender of a message can still see his own message history.
 - We threw together a quick React application with [react-chat-window](https://www.npmjs.com/package/react-chat-window)
 - First we harcoded the keys inside the application to get a very quick proof of concept. 
 - Then we modified the application to allow a user to choose his own private key and their friend's public key
