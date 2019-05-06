@@ -24,21 +24,22 @@ To see the result of our work, check out [chatexperiment.getforge.io](https://ch
 - We came up with the following code to generate the next public key of our chat friend, and our own next private key that corelates to the public key that our friend will have calculated as our next public key.
   ```javascript
   class PublicKeyChain {
-  constructor(theirPublicMasterKey, ourPrivateMasterKey) {
-    this.theirPublicMasterKey = theirPublicMasterKey;
-    this.ourPrivateMasterKey = ourPrivateMasterKey;
-    this.S = theirPublicMasterKey.point.mul(ourPrivateMasterKey.toBigNumber()).getX().toString('hex');
-  }
+    constructor(theirPublicMasterKey, ourPrivateMasterKey) {
+      this.theirPublicMasterKey = theirPublicMasterKey;
+      this.ourPrivateMasterKey = ourPrivateMasterKey;
+      this.S = theirPublicMasterKey.point.mul(ourPrivateMasterKey.toBigNumber()).getX().toString('hex');
+    }
 
-  next(message) {
-    let nextSharedSecret = bsv.crypto.Hash.sha256(Buffer.from(`${this.S}${message}`));
-    nextSharedSecret = Buffer.from(nextSharedSecret, 'hex');
-    nextSharedSecret = bsv.crypto.BN.fromBuffer(nextSharedSecret, 'hex');
-    let theirNextPublicKey = this.theirPublicMasterKey.point.add(G.mul(nextSharedSecret));
-    theirNextPublicKey = bsv.PublicKey.fromPoint(theirNextPublicKey);
-    return theirNextPublicKey;
+    next(message) {
+      let nextSharedSecret = bsv.crypto.Hash.sha256(Buffer.from(`${this.S}${message}`));
+      nextSharedSecret = Buffer.from(nextSharedSecret, 'hex');
+      nextSharedSecret = bsv.crypto.BN.fromBuffer(nextSharedSecret, 'hex');
+      let theirNextPublicKey = this.theirPublicMasterKey.point.add(G.mul(nextSharedSecret));
+      theirNextPublicKey = bsv.PublicKey.fromPoint(theirNextPublicKey);
+      return theirNextPublicKey;
+    }
   }
-  }
+  
   class PrivateKeyChain {
     constructor(theirPublicMasterKey, ourPrivateMasterKey) {
       this.theirPublicMasterKey = theirPublicMasterKey;
