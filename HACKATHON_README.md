@@ -16,6 +16,13 @@ We took the time in this hackathon to do a **complete rewrite of the project gen
 
 With the remaining time we had, we experimented with a **chat application 'Bitcoin Instant Messenger' (BiM)**
 
+## Our team
+
+### Pieter Den Dooven - developer and team captain
+### Jan-Alex Karlstedt - idea guy and motivational speaker
+### Filip Mariën - Bringer Of Coffee
+### Sven De Waerhert - developer
+
 ## Here's what we did
 
 - **We built an interactive step by step guide that allows anyone to create a permissioned key-value store on Bitcoin in less than 5 minutes.**
