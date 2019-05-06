@@ -10,7 +10,7 @@ The development library started 2 months ago as an experiment that dispatched Bi
 
 We took the time in this hackathon to do a **complete rewrite of the project generator to vastly improve the developer onboarding experience.**
 
-- All changes made during the hackathon are in the 'hackathon' branch.
+- All changes made during the hackathon are in the **'hackathon' branch.**
 - We expressly refrained from making changes to the core of the framework inside the `lib` directory.
 - All our efforts during this hackathon were on the `generator` directory
 
