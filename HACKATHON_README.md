@@ -19,7 +19,7 @@ With the remaining time we had, we experimented with a **chat application 'Bitco
 ## Our team
 
 - Pieter Den Dooven - developer and team captain
-- Jan-Alex Karlstedt - idea guy and motivational speaker
+- Jan-Axel Karlstedt - idea development and motivational speaker
 - Filip Mariën - Bringer Of Coffee
 - Sven De Waerhert - developer
 
