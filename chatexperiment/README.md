@@ -1,6 +1,6 @@
 # Chatexperiment
 
-We took a stab at creating an encrypted chat application on Bitcoin. 
+After we finished our generator we took a stab at creating an encrypted chat application on Bitcoin. 
 
 We explain the idea in more detail here: [Bitcoin Instant Messenger Idea](BitcoinInstantMessengerBiM.md)
 
@@ -68,12 +68,12 @@ To see the result of our work, check out [chatexperiment.getforge.io](https://ch
   
   Key rotation can happen on two levels:
   - The Bitcoin transaction layer
+  
     When sending a transaction with 1 input and 2 outputs (1 OP_RETURN and 1 change transfer to a new deterministically generated address)
   - The encapsulated message layer
-- We 
+- Web app UI/UX
 
 
-After we revamped the generator, we decided to play with a chat application on Bitcoin
 
 
 
