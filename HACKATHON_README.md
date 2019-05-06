@@ -14,7 +14,7 @@ We took the time in this hackathon to do a **complete rewrite of the project gen
 - We expressly refrained from making changes to the core of the framework inside the `lib` directory.
 - All our efforts during this hackathon were on the `generator` directory
 
-With the remaining time we had, we experimented with a **chat application 'Bitcoin Instant Messenger (BiM)**
+With the remaining time we had, we experimented with a **chat application 'Bitcoin Instant Messenger' (BiM)**
 
 ## Here's what we did
 
