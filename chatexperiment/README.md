@@ -10,7 +10,7 @@ To see the result of our work, check out [chatexperiment.getforge.io](https://ch
 
 - First we came up with a very rough protocol idea:
 
-  OP_RETURN BITCOMID TOADDR ENCRYPTED MESSAGE
+  OP_RETURN BITCOMID TOADDR ENCRYPTEDMESSAGE
 - We decided that we want to eventually make it into this, which we know is possible through deterministic shared secret generation.
   
   OP_RETURN ENCRYPTEDMESSAGE
