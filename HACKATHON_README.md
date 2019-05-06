@@ -5,7 +5,7 @@
 The development library started 2 months ago as an experiment that dispatched Bitcoin transactions as actions on a [Redux](https://redux.js.org/) store. Over time it evolved into a general purpose Bitcoin transaction handling framework, employing the same design pattern as is used by the popular web server framework [ExpressJS](https://expressjs.com/)
 
 
-*We realise there is prior work here, but the application development library is not our hackathon entry. The generator is our entry.*
+*We realise there is prior work in this repo, but the application development library is not our hackathon entry. The generator is our entry.*
 
 
 We took the time in this hackathon to do a **complete rewrite of the project generator to vastly improve the developer onboarding experience.**
@@ -14,7 +14,7 @@ We took the time in this hackathon to do a **complete rewrite of the project gen
 - We expressly refrained from making changes to the core of the framework inside the `lib` directory.
 - All our efforts during this hackathon were on the `generator` directory
 
-We took the time in this hackathon to create **Bitcoin Instant Messenger (BiM) that can be found in the chatexperiment folder**
+With the remaining time we had, we experimented with a **chat application 'Bitcoin Instant Messenger (BiM)**
 
 ## Here's what we did
 
@@ -42,7 +42,7 @@ We took the time in this hackathon to create **Bitcoin Instant Messenger (BiM) t
 
 - **After all this, we decided to experiment with a chat application on Bitcoin**
    
-  Documentation for this can be found in [chatexperiment](chatexperiment/README.md)
+   Please see the full write-up in the [chatexperiment](chatexperiment/README.md) directory.
 
   
 
@@ -60,6 +60,7 @@ the hackathon.
 ![A game of chess](https://bico.media/b61084cda28997ea093c97a00f6a434ff66250f924d2cfa3808f3962449ba693)
 ![Our whiteboard](https://bico.media/1b7c1d2abaa4bda95c4f21de60c1cfeb5c50cdf249486b25d5d61b9e823c7e4b)
 ![Starting implementation of the step by step guide](https://bico.media/c964d7a5bc6a735f1aea4451a2a55eb7c91e3638bf7c1a3eca9758bd42b96448)
+![The generated application from the tutorial](generator/generated_screenshot.jpg)
 
 
 
