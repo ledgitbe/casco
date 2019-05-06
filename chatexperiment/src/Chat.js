@@ -8,6 +8,10 @@ import { filterAddress, decrypt, encrypt } from './middleware.js';
 import QRCode from 'qrcode.react';
 
 const bsv = Datapay.bsv;
+var G = bsv.crypto.Point.getG();
+
+
+//STABLE 790c3c91
 
 class Chat extends Component {
 
@@ -183,4 +187,59 @@ class Chat extends Component {
   }
 }
 
+class PublicKeyChain {
+  constructor(theirPublicMasterKey, ourPrivateMasterKey) {
+    this.theirPublicMasterKey = theirPublicMasterKey;
+    this.ourPrivateMasterKey = ourPrivateMasterKey;
+    this.S = theirPublicMasterKey.point.mul(ourPrivateMasterKey.toBigNumber()).getX().toString('hex');
+  }
+
+  next(message) {
+    let nextSharedSecret = bsv.crypto.Hash.sha256(Buffer.from(`${this.S}${message}`));
+    nextSharedSecret = Buffer.from(nextSharedSecret, 'hex');
+    nextSharedSecret = bsv.crypto.BN.fromBuffer(nextSharedSecret, 'hex');
+    let theirNextPublicKey = this.theirPublicMasterKey.point.add(G.mul(nextSharedSecret));
+    theirNextPublicKey = bsv.PublicKey.fromPoint(theirNextPublicKey);
+    return theirNextPublicKey;
+  }
+}
+
+class PrivateKeyChain {
+  constructor(theirPublicMasterKey, ourPrivateMasterKey) {
+    this.theirPublicMasterKey = theirPublicMasterKey;
+    this.ourPrivateMasterKey = ourPrivateMasterKey;
+    this.S = theirPublicMasterKey.point.mul(ourPrivateMasterKey.toBigNumber()).getX().toString('hex');
+  }
+
+  next(message) {
+    let nextSharedSecret = bsv.crypto.Hash.sha256(Buffer.from(`${this.S}${message}`));
+    nextSharedSecret = Buffer.from(nextSharedSecret, 'hex');
+    nextSharedSecret = bsv.crypto.BN.fromBuffer(nextSharedSecret, 'hex');
+    let ourNextPrivateKey = this.ourPrivateMasterKey.bn.add(nextSharedSecret);
+    ourNextPrivateKey = bsv.PrivateKey(ourNextPrivateKey);
+    return ourNextPrivateKey;
+  }
+}
+
+
+function createKey() {
+  let privateKey = new bsv.PrivateKey();
+  let address = privateKey.toAddress();
+  let publicKey = privateKey.toPublicKey();
+
+  return {
+    privateKey,
+    publicKey,
+    address
+  };
+}
+
+window.bob = createKey();
+window.alice = createKey();
+
+window.bsv = bsv;
+
+
+window.PublicKeyChain = PublicKeyChain;
+window.PrivateKeyChain = PrivateKeyChain;
 export default Chat;
