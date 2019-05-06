@@ -60,6 +60,7 @@ the hackathon.
 ![A game of chess](https://bico.media/b61084cda28997ea093c97a00f6a434ff66250f924d2cfa3808f3962449ba693)
 ![Our whiteboard](https://bico.media/1b7c1d2abaa4bda95c4f21de60c1cfeb5c50cdf249486b25d5d61b9e823c7e4b)
 ![Starting implementation of the step by step guide](https://bico.media/c964d7a5bc6a735f1aea4451a2a55eb7c91e3638bf7c1a3eca9758bd42b96448)
+![The generated application from the tutorial](generator/generated_screenshot.jpg)
 
 
 
