@@ -1,5 +1,7 @@
 # Chatexperiment
 
+![Screenshot](screenshot.jpeg)
+
 After we finished our generator we took a stab at creating an encrypted chat application on Bitcoin. 
 
 We explain the idea in more detail here: [Bitcoin Instant Messenger Idea](BitcoinInstantMessengerBiM.md)
