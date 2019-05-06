@@ -49,10 +49,11 @@ We took the time in this hackathon to create **Bitcoin Instant Messenger (BiM) t
 
 ### Public release
 
-We will release the entire framework under the GNU GPLv3 license, but right now
-the repository is not in a state ready for release yet. Right now our focus is 
+We are sharing our internal repository with you so we can fully disclose
+the history of this repository. We will release the entire framework under the GNU GPLv3 license, but right now
+the repository is not ready for release yet. Right now our focus is 
 on the hackathon. We will prepare the repository for public release after
-the hackathon.
+the hackathon. 
 
 ### Pictures!
 ![QA on the example projects](https://bico.media/98e8202577620aa6ca20b1b9f9108594f4521f77cd1e54dc1855796940fe4ce6)
