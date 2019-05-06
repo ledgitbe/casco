@@ -127,7 +127,7 @@ class Chat extends Component {
 
   render() {
     const agentProfile = {teamName: this.state.PUBLIC_KEY}
-    return (<div>
+    return (<div style={{textAlign:"left", margin:"20px"}}>
       { this.state.formVisible && (
       <form onSubmit={this.handleSubmit}>
         <label>
@@ -143,7 +143,7 @@ class Chat extends Component {
         </form>
       )}
       { this.state.PRIVATE_KEY && (
-        <div>
+        <div style={{textalign:"left"}}>
           Fund local wallet: <br />
       
           <QRCode value={this.state.fromAddress} /> <br />
