@@ -9,6 +9,7 @@ import QRCode from 'qrcode.react';
 
 const bsv = Datapay.bsv;
 var G = bsv.crypto.Point.getG();
+var N = bsv.crypto.Point.getN();
 
 
 //STABLE 790c3c91
@@ -195,9 +196,9 @@ class PublicKeyChain {
   }
 
   next(message) {
-    let nextSharedSecret = bsv.crypto.Hash.sha256(Buffer.from(`${this.S}${message}`));
-    nextSharedSecret = Buffer.from(nextSharedSecret, 'hex');
-    nextSharedSecret = bsv.crypto.BN.fromBuffer(nextSharedSecret, 'hex');
+    let nextSharedSecret = 
+      bsv.crypto.Hash.sha256hmac(Buffer.from(this.S), Buffer.from(message));
+    nextSharedSecret = bsv.crypto.BN.fromBuffer(nextSharedSecret);
     let theirNextPublicKey = this.theirPublicMasterKey.point.add(G.mul(nextSharedSecret));
     theirNextPublicKey = bsv.PublicKey.fromPoint(theirNextPublicKey);
     return theirNextPublicKey;
@@ -212,10 +213,10 @@ class PrivateKeyChain {
   }
 
   next(message) {
-    let nextSharedSecret = bsv.crypto.Hash.sha256(Buffer.from(`${this.S}${message}`));
-    nextSharedSecret = Buffer.from(nextSharedSecret, 'hex');
-    nextSharedSecret = bsv.crypto.BN.fromBuffer(nextSharedSecret, 'hex');
-    let ourNextPrivateKey = this.ourPrivateMasterKey.bn.add(nextSharedSecret);
+    let nextSharedSecret = 
+      bsv.crypto.Hash.sha256hmac(Buffer.from(this.S), Buffer.from(message));
+    nextSharedSecret = bsv.crypto.BN.fromBuffer(nextSharedSecret);
+    let ourNextPrivateKey = (this.ourPrivateMasterKey.bn.add(nextSharedSecret)).mod(N);
     ourNextPrivateKey = bsv.PrivateKey(ourNextPrivateKey);
     return ourNextPrivateKey;
   }
@@ -234,10 +235,13 @@ function createKey() {
   };
 }
 
-window.bob = createKey();
-window.alice = createKey();
+var bob = window.bob =  createKey();
+var alice = window.alice = createKey();
 
 window.bsv = bsv;
+
+window.p = new PrivateKeyChain(alice.publicKey, bob.privateKey);
+window.P = new PublicKeyChain(bob.publicKey, alice.privateKey);
 
 
 window.PublicKeyChain = PublicKeyChain;
