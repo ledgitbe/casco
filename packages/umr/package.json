@@ -1,0 +1,35 @@
+{
+  "name": "umr",
+  "description": "Universal Middleware Router",
+  "version": "0.0.4",
+  "author": "Ledgit",
+  "contributors": [
+    "Ledgit"
+  ],
+  "keywords": [
+    "framework",
+    "middleware",
+    "connect",
+    "universal"
+  ],
+  "repository": "ledgit/umr",
+  "dependencies": {
+    "debug": "^4.1.1",
+    "utils-merge": "1.0.1"
+  },
+  "devDependencies": {
+    "eslint": "2.13.1"
+  },
+  "license": "MIT",
+  "files": [
+    "LICENSE",
+    "index.js"
+  ],
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "scripts": {
+    "lint": "eslint index.js",
+    "postversion": "git push && git push --tags && npm publish"
+  }
+}
