@@ -29,7 +29,6 @@
     "node": ">= 0.10.0"
   },
   "scripts": {
-    "lint": "eslint index.js",
-    "postversion": "git push && git push --tags && npm publish"
+    "lint": "eslint index.js"
   }
 }
