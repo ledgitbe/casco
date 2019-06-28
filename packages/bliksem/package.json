@@ -1,6 +1,6 @@
 {
   "name": "ledgit",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,7 +14,7 @@
     "eventsource": "^1.0.7",
     "fastest-validator": "^0.6.17",
     "queue": "^6.0.1",
-    "umr": "^0.0.5"
+    "umr": "^0.0.6"
   },
   "files": [
     "lib"
