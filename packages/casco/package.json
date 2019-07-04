@@ -17,7 +17,8 @@
     "umr": "^0.0.4"
   },
   "files": [
-    "lib"
+    "lib",
+    "LICENSE"
   ],
   "devDependencies": {
     "datapay": "0.0.15",
