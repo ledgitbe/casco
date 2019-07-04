@@ -1,4 +1,4 @@
-const ledgit = require('ledgit');
+const Casco = require('casco');
 const QRCode = require('qrcode-terminal');
 
 require('dotenv').config();
@@ -8,7 +8,7 @@ console.log("Send a payment to this address:", process.env.ADDRESS);
 
 QRCode.generate(process.env.ADDRESS, { small: true });
 
-const app = ledgit();
+const app = Casco();
 
 app.use((req, res) => {
   console.log("Payment detected!");

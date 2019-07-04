@@ -1,10 +1,10 @@
-const ledgit = require('ledgit');
-const router = require('ledgit/lib/middleware/router-s2json');
-const responder = require('ledgit/lib/middleware/responder');
+const Casco = require('casco');
+const router = require('casco/lib/middleware/router-s2json');
+const responder = require('casco/lib/middleware/responder');
 
 require('dotenv').config();
 
-const app = ledgit();
+const app = Casco();
 
 // Fills req.route, req.args, req.caller
 app.use(router);

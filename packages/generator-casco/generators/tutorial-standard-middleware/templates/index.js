@@ -1,10 +1,10 @@
-const ledgit = require('ledgit');
-const router = require('ledgit/lib/middleware/router-s2json');
+const Casco = require('casco');
+const router = require('casco/lib/middleware/router-s2json');
 
 require('dotenv').config();
 
 
-const app = ledgit();
+const app = Casco();
 
 // default router-s2json implements the following protocol:
 // txOutput 0: OP_RETURN <BITCOM_ID> <JSON ENCODED ARRAY I.E. [func, arg1, arg2, ...]>

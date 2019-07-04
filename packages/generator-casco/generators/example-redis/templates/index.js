@@ -1,7 +1,7 @@
-const ledgit = require('ledgit');
-const router = require('ledgit/lib/middleware/router-s2json');
-const logger = require('ledgit/lib/middleware/logger');
-const validator = require('ledgit/lib/middleware/validator');
+const Casco = require('casco');
+const router = require('casco/lib/middleware/router-s2json');
+const logger = require('casco/lib/middleware/logger');
+const validator = require('casco/lib/middleware/validator');
 const redis = require('redis');
 const client = redis.createClient();
 
@@ -42,7 +42,7 @@ const state = {
   participants: [],
 };
 
-const app = ledgit();
+const app = Casco();
 
 app.use(router);
 app.use(logger);
