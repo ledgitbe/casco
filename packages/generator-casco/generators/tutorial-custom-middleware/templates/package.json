@@ -1,0 +1,19 @@
+{
+  "name": "<%= name %>",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "casco": "latest",
+    "datapay": "0.0.14",
+    "dotenv": "^7.0.0",
+    "qrcode-terminal": "^0.12.0"
+  },
+  "devDependencies": {},
+  "description": "Tutorial custom middleware"
+}
