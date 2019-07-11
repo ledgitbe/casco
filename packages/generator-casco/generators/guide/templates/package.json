@@ -7,7 +7,7 @@
   },
   "author": "",
   "dependencies": {
-    "ledgit" : "latest",
+    "casco" : "latest",
     "datapay": "0.0.14",
     "dotenv": "^7.0.0",
     "qrcode-terminal": "^0.12.0"

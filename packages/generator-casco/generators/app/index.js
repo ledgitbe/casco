@@ -16,9 +16,9 @@ module.exports = class extends Generator {
   }
 
   async prompting() {
-    const choices =  ['Getting Started guide (hackathon)', 'New Project', 'New Client'];
+    const choices =  ['Getting Started guide', 'New Project', 'New Client'];
 
-    console.log("Welcome to The Ledgit Bitcoin Application Framework");
+    console.log("Welcome to Casco");
 
     const props = await this.prompt([
       {
@@ -40,7 +40,7 @@ module.exports = class extends Generator {
         client_types = client_types.filter(function(item) {
           return item.startsWith('client');
         });
-        
+
         let client_choice = await this.prompt([
           {
             type: "list",
