@@ -1,0 +1,21 @@
+{
+  "name": "generator-casco",
+  "version": "0.0.1-alpha.0",
+  "description": "",
+  "author": "Ledgit bvba",
+  "license": "MIT",
+  "files": [
+    "generators",
+    "util",
+    "LICENSE"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "bitindex-sdk": "^3.0.14",
+    "bsv": "^0.27.2",
+    "chalk": "^2.4.2",
+    "yeoman-generator": "^3.2.0"
+  }
+}

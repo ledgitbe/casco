@@ -1,0 +1,18 @@
+{
+  "name": "<%= name %>",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "redis": "^2.8.0",
+    "casco": "latest",
+    "datapay": "0.0.14",
+    "dotenv": "^7.0.0",
+    "qrcode-terminal": "^0.12.0"
+  },
+  "devDependencies": {},
+  "description": "Agent updates key value pairs in redis based on Bitcoin transactions. This could be expanded to create global database synchronization."
+}
