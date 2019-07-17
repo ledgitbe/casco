@@ -24,7 +24,7 @@ The above application will listen to all transactions with *1Ks6qfewg1xovgZsJFkk
 ## Install
 ### Quick install
 ```
-npm install -g yo casco
+npm install -g yo generator-casco
 yo casco
 ```
 
