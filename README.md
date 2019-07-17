@@ -1,9 +1,10 @@
 # Casco
 
-<aside class="warning">
-This repository contains alpha software and is in heavy development. 
-Do not use this.
-</aside>
+## WARNING
+**This repository contains alpha software and is in heavy development. 
+Do not use this.**
+
+
 
 ## Introduction
 
