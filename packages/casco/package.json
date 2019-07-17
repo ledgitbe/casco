@@ -9,7 +9,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ledgit/casco.git",
+    "url": "https://github.com/ledgitbe/casco.git",
     "directory": "packages/casco"
   },
   "dependencies": {

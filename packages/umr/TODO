@@ -1,6 +1,0 @@
-Update documentation:
- - req.route is magic variable
-
-Tests:
- - Tests included are from connect, we need our own tests
-
