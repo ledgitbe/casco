@@ -1,7 +1,7 @@
 {
-  "name": "umr",
-  "description": "Universal Middleware Router",
-  "version": "0.0.6",
+  "name": "casco-umr",
+  "description": "Casco Universal Middleware Router",
+  "version": "0.0.1-alpha.0",
   "author": "Ledgit bvba",
   "contributors": [
     "Ledgit"
@@ -12,7 +12,11 @@
     "connect",
     "universal"
   ],
-  "repository": "ledgit/umr",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ledgit/casco.git",
+    "directory": "packages/casco-umr"
+  },
   "dependencies": {
     "debug": "^4.1.1",
     "utils-merge": "1.0.1"
