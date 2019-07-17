@@ -4,6 +4,11 @@
   "description": "",
   "author": "Ledgit bvba",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ledgit/casco.git",
+    "directory": "packages/generator-casco"
+  },
   "files": [
     "generators",
     "util",
