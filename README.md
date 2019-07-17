@@ -31,7 +31,7 @@ yo casco
 ### Walkthrough
 The framework can be set up and interfaced in a familiar manner – via command prompt on a machine running Node.js. A single line allows a developer to begin:
 
-`npm install -g yo casco`
+`npm install -g yo generator-casco`
 
 This installs the dependency Yeoman, a generic scaffolding system, and the Casco Framework.
 
