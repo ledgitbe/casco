@@ -1,5 +1,7 @@
 const axios = require('axios');
 const EventSource = require('eventsource');
+const JSONStream = require('JSONStream');
+const es = require('event-stream');
 
 const endpoints = {
   query: 'https://genesis.bitdb.network/q/1FnauZ9aUH2Bex6JzdcV4eNX7oLSSEbxtN/',
@@ -58,6 +60,7 @@ const bitdb = {
         height = height || 0;
         return {
           "v": 3,
+          "db": "c",
           "q": {
             "find": { 
               "out.b0": {
@@ -76,6 +79,7 @@ const bitdb = {
         return {
           v: 3,
           q: {
+            "db": "c",
             find: { 
               "out.e.a" : address,
               "$or": [ { "blk.i" : {"$gt": height }}, { "blk.i": { "$exists" : false } } ]
@@ -89,6 +93,7 @@ const bitdb = {
         return {
           v: 3,
           q: {
+            "db": "c",
             find: { 
               "in.e.a" : address,
               "$or": [ { "blk.i" : {"$gt": height }}, { "blk.i": { "$exists" : false } } ]
@@ -99,23 +104,53 @@ const bitdb = {
     }
   },
 
-  socket(query) {
+  listen(query, handler) {
     const url = endpoints.socket + btoa(JSON.stringify(query));
 
-    return new EventSource(url);
+    let events = new EventSource(url);
+
+    events.onmessage = (message) => {
+      if (message.type === 'open' || message.type === 'block') {
+        return;
+      }
+      let data;
+      try {
+        data = JSON.parse(message.data);
+      } catch(e) {
+        console.error(e);
+        return;
+      }
+
+      if (data.type !== 'u') {
+        return;
+      }
+
+      let bitDbResponse = data.data[0];
+
+      // This handler is provided by sync(), it will make sure these events
+      // are stalled while crawling
+      handler(bitDbResponse);
+    };
   },
 
-  db(query) {
-    const path = btoa(JSON.stringify(query));
+  crawl(query, handler) {
+    return new Promise((resolve, reject) => {
+      const path = btoa(JSON.stringify(query));
 
-    return client.get(path)
-      .then(r => r.data)
-      .then(r => {
-        return r.c.concat(r.u) // confirmed txs + unconfirmed txs
-      });
+      client({
+        method: 'get',
+        url: path,
+        responseType: 'stream'
+      })
+        .then(res => res.data)
+        .then(stream => {
+          stream
+            .pipe(JSONStream.parse('c.*'))
+            .pipe(es.mapSync(handler))
+            .pipe(es.wait(resolve))
+        });
+    });
   },
 }
-
-
 
 module.exports = bitdb;

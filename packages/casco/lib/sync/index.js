@@ -23,43 +23,19 @@ const schemas = {
 const isValidBitDbResponse = validator.compile(schemas.bitDbResponseSchema);
 
 module.exports = async function(app, socketQuery, dbQuery) {
-  let syncing = true;
+  let crawling = true;
 
-  // This will hold seen txid, to prevent any double dispatches when we switch from syncing mode(bitquery) to running mode (bitsocket)
+  // This will hold seen txid, to prevent any double dispatches when we switch from crawling mode(bitquery) to running mode (bitsocket)
   const seen = new CircularBuffer(25);
 
-  // This paused queue will hold all tx's that are received during syncing(bitquery), after the bitquery txs are processed,
+  // This paused queue will hold all tx's that are received during crawling(bitquery), after the bitquery txs are processed,
   // this queue will be put into autostart mode
   const queue = Queue({ concurrency: 1, autostart: false});
 
-  const bitsocket = adapter.socket(socketQuery);
-  bitsocket.onmessage = (message) => {
-    if (message.type === 'open' || message.type === 'block') {
-      return;
+  const listenHandler = function(bitDbResponse) {
+    if (crawling) {
+      debug("tx while crawling! adding to queue");
     }
-    let data;
-    try {
-      data = JSON.parse(message.data);
-    } catch(e) {
-      console.error(e);
-      return;
-    }
-
-    if (data.type !== 'u') {
-      return;
-    }
-
-    let bitDbResponse = data.data[0];
-    let isValid = isValidBitDbResponse(bitDbResponse);
-    if (isValid !== true) {
-      console.error("Invalid BitDB response");
-      return;
-    }
-
-    if (syncing) {
-      debug("tx while syncing! adding to queue");
-    }
-
     queue.push(function(cb) {
       const isAlreadySeen = seen.toarray().indexOf(bitDbResponse.tx.h) >= 0;
       if (isAlreadySeen) {
@@ -67,44 +43,40 @@ module.exports = async function(app, socketQuery, dbQuery) {
         cb();
       }
       debug("Now processing tx in the queue");
-      dispatch(bitDbResponse);
+      dispatch(bitDbResponse, 'mempool');
       cb();
     });
   }
 
-  const txs = await adapter.db(dbQuery);
-
-  // Replay all transactions
-  for (let i = 0; i < txs.length; i++) {
-    let bitDbResponse = txs[i];
-    let isValid = isValidBitDbResponse(bitDbResponse);
-    if (isValid !== true) {
-      console.error("Invalid BitDB response");
-      return;
-    }
-    dispatch(bitDbResponse);
+  const crawlHandler = (bitDbResponse) => {
+    dispatch(bitDbResponse, 'block');
     seen.enq(bitDbResponse.tx.h);
   }
 
-  // process all transactions that came in while syncing from bitdb query
+  adapter.listen(socketQuery, listenHandler);
+  await adapter.crawl(dbQuery, crawlHandler);
+
+  // process all transactions that came in while crawling from bitdb query
   queue.start(function(err) {
     if (err) { 
       console.error("queue start error", err); 
       process.exit();
     }
     queue.autostart = true;
-    if (syncing) {
+    if (crawling) {
       console.log("Syncing complete");
-      syncing=false;
+      crawling=false;
     }
   });
 
-  function dispatch(bitDbResponse) {
+  function dispatch(bitDbResponse, method) {
     let req = {};
     let res = {};
 
     req.tx = bitDbResponse;
-    req.isSyncing = syncing;
+    req.method = method;
+    req.isCrawling = crawling;
+    req.url = '/';
 
     // Send through umr
     app.handle(req, {}, () => {});
