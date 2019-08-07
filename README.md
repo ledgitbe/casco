@@ -1,8 +1,10 @@
 # Casco
 
+> Bitcoin application development toolkit
+
 ## WARNING
 **This repository contains alpha software and is in heavy development. 
-Do not use this.**
+Do not use this for mission critical applications.**
 
 
 
@@ -22,95 +24,53 @@ app.listen('bit://1Ks6qfewg1xovgZsJFkkgQdcyFzNeH7Pv5');
 The above application will listen to all transactions with *1Ks6qfewg1xovgZsJFkkgQdcyFzNeH7Pv5* as the Bitcom protocol id.
 
 ## Install
+
 ### Quick install
 ```
 npm install -g yo generator-casco
 yo casco
 ```
 
-### Walkthrough
-The framework can be set up and interfaced in a familiar manner – via command prompt on a machine running Node.js. A single line allows a developer to begin:
-
-`npm install -g yo generator-casco`
-
-This installs the dependency Yeoman, a generic scaffolding system, and the Casco Framework.
-
-The next step is to run the project generator.
-
-`yo casco`
-
-A guided instance will boot, allowing a user to choose from options.
-
-> Getting Started Guide (Hackathon)
->
-> New Project
->
-> New Client
-
+The command `yo casco` will prompt you with the choice of generating a new example project
+or an empty project.
 
 We recommend new users to use the **Getting Started Guide** as it provides a step by step tutorial on beginning to use the application framework with a statemachine example.
 
+Usually 2 clients will be generated in your project, named `client-ADDRESS.js`, where `ADDRESS` is a Bitcoin address. The asssociated public and private keys can be found in the `.env*` files. 
 
-**New Project** will prompt a user if they would like to generate a project from an example or run a tutorial. The options available are:
-
-| Option                      | 
-| -------------               |  
-| Empty                       |
-| Example-ping-pong           |
-| Example-redis               |
-| Example-payments            |
-| Tutorial-statemachine       |
-| Tutorial-argumentvalidation |
-| Tutorial-custom-middleware  |
-| Tutorial-simple-router      |
-| Tutorial-standard-middleware|
-
-You will be asked to name your project and a new folder with the set name will be created.
-
-Usually 2 clients will be generated in your project, with Bitcoin addresses as the names. Associated public and private keys can be found in the .env files. 
-
-## Running a project
-
-Once you've created a project, you can run it!
-First navigate to your project directory
-
-Once you're in the project folder, run the project with the command:
-
-`node index.js` or `npm start`
-
- On a successful boot your console should read "Syncing complete"
+To fund a client, simply run `node client-<ADDRESS>.js`. A QR code will be displayed to which you can send funds. Use the client to send transactions to interact with the application in `index.js`.
 
 If your project has previously saved a state to the blockchain - it will resync with the blockchain to reach the last known state.
-
-Use the client-*.js files to send transactions to interact with the application. Navigate the terminal to your project folder and you may begin broadcasting transactions with clients (after funding).
-
 
 ## Funding a project's client
 
 Usually 2 clients are created by default. To fund a client so it can begin sending transactions, navigate to the project directory and run:
 
-`node client-ADDRESS.js`
+`node client-<ADDRESS>.js`
 
-where ADDRESS is the client's generated address.
+where `ADDRESS` is the client's generated address.
 
-**Pro tip:** Use TAB completion!
-
-This will print a usage syntax, your client's public key and a QR code. Use the QR code or public key to fund the wallet for transactions sent from that client. BSV transaction fees are fractions of a cent, and big blocks only makes them cheaper!
+This will print a usage message, your client's address and a corresponding QR code.
 
 You can always get your satoshis back from a client using
 
-`node client-ADDRESS.js --refund WITHDRAWALADDRESS`
+`node client-<ADDRESS>.js --refund <WITHDRAWALADDRESS>`
 
-  where ADDRESS is the client's public address. And WITHDRAWALADDRESS is the address you want to receive the coins on.
+where `ADDRESS` is the client's address. And `WITHDRAWALADDRESS` is the address you want to receive the coins on.
 
 ## Creating a new client
 
-If the default clients aren't sufficient, then you can create a new client using the menu accessed by running the command inside your project directory.
+If you need an extra client, you can create one using the menu accessed by running 
 
 `yo casco`
 
-or with this shortcut:
+or directly with:
+
 `yo casco:client`
+
+# Middleware
+
+Casco comes standard with a few useful middleware functions, please check out the [statemachine example](examples/statemachine/index.js) on their usage. Also check out the annotated sourcecode of the middleware in [packages/casco/lib/middleware](packages/casco/lib/middleware)
 
 
 # Future improvements
