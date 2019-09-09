@@ -1,5 +1,5 @@
 const Casco = require('casco');
-const decrypt = require('../lib/middleware/decrypt-s2json.js');
+const decrypt = require('casco/lib/middleware/decrypt-s2json.js');
 
 require('dotenv').config();
 
