@@ -24,6 +24,7 @@ const isValidBitDbResponse = validator.compile(schemas.bitDbResponseSchema);
 
 module.exports = async function(app, socketQuery, dbQuery) {
   let syncing = true;
+  let dispatchKoa = app.routes();
 
   // This will hold seen txid, to prevent any double dispatches when we switch from syncing mode(bitquery) to running mode (bitsocket)
   const seen = new CircularBuffer(25);
@@ -45,9 +46,11 @@ module.exports = async function(app, socketQuery, dbQuery) {
       return;
     }
 
-    if (data.type !== 'u') {
+    if (data.type === 'open') {
       return;
     }
+    //console.log(data);
+    let isConfirmed = data.type === 'c';
 
     let bitDbResponse = data.data[0];
     let isValid = isValidBitDbResponse(bitDbResponse);
@@ -64,10 +67,10 @@ module.exports = async function(app, socketQuery, dbQuery) {
       const isAlreadySeen = seen.toarray().indexOf(bitDbResponse.tx.h) >= 0;
       if (isAlreadySeen) {
         debug("TX", bitDbResponse.tx.h, "already seen! Doing nothing");
-        cb();
+        return cb();
       }
       debug("Now processing tx in the queue");
-      dispatch(bitDbResponse);
+      dispatch(bitDbResponse, isConfirmed);
       cb();
     });
   }
@@ -82,7 +85,7 @@ module.exports = async function(app, socketQuery, dbQuery) {
       console.error("Invalid BitDB response");
       return;
     }
-    dispatch(bitDbResponse);
+    dispatch(bitDbResponse, !!bitDbResponse.blk);
     seen.enq(bitDbResponse.tx.h);
   }
 
@@ -99,15 +102,16 @@ module.exports = async function(app, socketQuery, dbQuery) {
     }
   });
 
-  function dispatch(bitDbResponse) {
-    let req = {};
-    let res = {};
+  function dispatch(bitDbResponse, isConfirmed) {
+    let ctx = {};
 
-    req.tx = bitDbResponse;
-    req.isSyncing = syncing;
+    ctx.method = isConfirmed ? 'BLOCK' : 'MEMPOOL';
+    ctx.path = '/';
+    ctx.tx = bitDbResponse;
+    ctx.isSyncing = syncing;
 
     // Send through umr
-    app.handle(req, {}, () => {});
+    dispatchKoa(ctx, () => {});
   }
 
   return;

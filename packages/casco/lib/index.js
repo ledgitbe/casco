@@ -1,11 +1,12 @@
 const sync = require('./sync/');
 const adapter = require('./sync/adapters/bitdb.js');
 const umr = require('umr');
+const Router = require('casco-koa-router');
 
 // For now we're keeping the sync function and umr separate
 
 function createApp() {
-  let app = umr();
+  let app = new Router();
 
   /**
    * Start syncing and listening to transactions
