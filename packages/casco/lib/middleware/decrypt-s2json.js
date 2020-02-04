@@ -2,7 +2,7 @@ const ECIES = require('bsv/ecies');
 const { PrivateKey, PublicKey } = require('bsv');
 
 /*
-/ This assumes the encrypted data is inside s2
+/ This assumes the encrypted data is inside s3
 / It also assumes the plaintext is a JSON encoded array:
 / [ func, arg1, arg2, arg3, ... ]
 /
@@ -26,7 +26,7 @@ function createCryptoRouter(privateKey) {
 
     let decrypted;
     try {
-      decrypted = CID.decrypt(Buffer.from(req.tx.out[0].b2, 'base64')).toString();
+      decrypted = CID.decrypt(Buffer.from(req.tx.out[0].b3, 'base64')).toString();
       decrypted = JSON.parse(decrypted);
     } catch(e) {
       console.log(e)

@@ -5,10 +5,10 @@ function router(req, res, next) {
   // Don't set route or args if req.route is already set previously
   if (!req.route) {
 
-    req.route = req.tx.out[0].s1;
+    req.route = req.tx.out[0].s2;
     req.args = [];
 
-    let index = 2;
+    let index = 3;
     while (req.tx.out[0]['s' + index]) {
       req.args.push(req.tx.out[0]['s' + index]);
       index += 1;

@@ -26,6 +26,7 @@ if (process.argv[2] === '--refund') {
       Datapay.send(
         {
           pay: { 
+            rpc: 'https://bchsvexplorer.com',
             key: process.env.PRIVATE_KEY,
             to: [{address: process.argv[3],value: balance-400}]
           }
@@ -47,8 +48,9 @@ if (process.argv[2] === '--refund') {
 
   Datapay.send(
     {
+      safe: true,
+      pay: { rpc: "https://bchsvexplorer.com", key: process.env.PRIVATE_KEY },
       data: [process.env.PREFIX, JSON.stringify([func, ...args])],
-      pay: { key: process.env.PRIVATE_KEY }
     },
     (err, txid) => { 
       if (err) {

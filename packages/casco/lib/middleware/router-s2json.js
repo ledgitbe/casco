@@ -6,7 +6,7 @@ function router(req, res, next) {
 
   // Don't set route or args if req.route is already set previously
   if (!req.route) {
-    let payload = JSON.parse(req.tx.out[0].s2);
+    let payload = JSON.parse(req.tx.out[0].s3);
 
     req.route = payload[0];
     req.args = payload.slice(1);
