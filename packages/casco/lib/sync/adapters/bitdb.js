@@ -26,9 +26,12 @@ const bitdb = {
           q: {
             find: {
               "out.b0": {
-                "op": 106
+                "op": 0
               },
-              "out.s1" : address
+              "out.b1": {
+                "op": 106,
+              },
+              "out.s2" : address
             },
           }
         }
@@ -61,9 +64,12 @@ const bitdb = {
           "q": {
             "find": { 
               "out.b0": {
+                "op": 0
+              },
+              "out.b1": {
                 "op": 106
               },
-              "out.s1": address, 
+              "out.s2": address, 
               "$or": [ { "blk.i" : {"$gt": height }}, { "blk.i": { "$exists" : false } } ]
             },
             "sort": { "blk.t": 1 }
