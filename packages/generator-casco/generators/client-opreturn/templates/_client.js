@@ -27,7 +27,7 @@ if (process.argv[2] === '--refund') {
         {
           safe: true,
           pay: { 
-            rpc: 'https://bchsvexplorer.com',
+            rpc: 'https://api.mattercloud.net',
             key: process.env.PRIVATE_KEY,
             to: [{address: process.argv[3],value: balance-400}]
           },
@@ -51,7 +51,7 @@ if (process.argv[2] === '--refund') {
   Datapay.send(
     {
       safe: true,
-      pay: { rpc: "https://bchsvexplorer.com", key: process.env.PRIVATE_KEY },
+      pay: { rpc: "https://api.mattercloud.net", key: process.env.PRIVATE_KEY },
       data: [process.env.PREFIX, func, ...args],
     },
     (err, txid) => { 
