@@ -22,7 +22,7 @@
     "utils-merge": "1.0.1"
   },
   "devDependencies": {
-    "eslint": "2.13.1"
+    "eslint": "7.0.0"
   },
   "license": "MIT",
   "files": [

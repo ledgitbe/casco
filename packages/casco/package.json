@@ -13,21 +13,21 @@
     "directory": "packages/casco"
   },
   "dependencies": {
-    "axios": "^0.19.0",
-    "bsv": "0.27.2",
+    "axios": "^0.19.2",
+    "bsv": "1.5.3",
     "circular-buffer": "^1.0.2",
     "eventsource": "^1.0.7",
-    "fastest-validator": "^0.6.17",
+    "fastest-validator": "^1.4.1",
     "queue": "^6.0.1",
-    "umr": "^0.0.4"
+    "umr": "^0.0.6"
   },
   "files": [
     "lib",
     "LICENSE"
   ],
   "devDependencies": {
-    "datapay": "0.0.15",
-    "dotenv": "^8.0.0",
+    "datapay": "0.0.22",
+    "dotenv": "^8.2.0",
     "qrcode-terminal": "^0.12.0"
   },
   "description": ""
